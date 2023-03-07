@@ -6,7 +6,6 @@ const mongoose = require("mongoose");
 const adminConstructor = module.require("./Schemas/admins");
 const serviceConstructor = module.require("./Schemas/services");
 const bcrypt = require("bcrypt");
-const { Category } = require("@mui/icons-material");
 const app = express();
 const cors = require("cors");
 app.use(cors({ origin: true }));
