@@ -13,7 +13,7 @@ app.use(express.json());
 dotenv.config("./.env");
 mongoose.set("strictQuery", false);
 app.listen("5000", () => {
-  console.log("mongoose server running at port 5000");
+  console.log("mongoose server running at port 5000 {after pushing to git from glitch}");
   mongoose
     .connect(process.env.dbid)
     .then(() => {
