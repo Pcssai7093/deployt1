@@ -9,23 +9,27 @@ const bcrypt = require("bcrypt");
 const app = express();
 const cors = require("cors");
 const socket=require("socket.io")
+const jwt=require("jsonwebtoken")
+
+
+
 app.use(cors({ origin: true }));
 app.use(express.json());
+
+
 dotenv.config("./.env");
 mongoose.set("strictQuery", false);
 let port=process.env.port || 5000
+
+
+
 const server=app.listen(port, () => {
   console.log(`mongoose server running at port ${port}`);
   mongoose
     .connect(process.env.dbid)
     .then(() => {
       console.log("mongodb connection successful");
-      // * adding data
-
-      //     //* code 11000 for duplication key error
-      //     //* get error attribute from err.keyValue
-      //     // console.log(err.keyValue);
-      //   });
+     
     })
     .catch((err) => {
       console.log(err);
@@ -52,10 +56,7 @@ app.post("/user/signin", (req, res) => {
   userConstructor
     .find({ email: data.email })
     .then((result) => {
-      // console.log(data.password);
-      // console.log(result[0].password);
-      // let hashnew = bcrypt.hashSync(data.password, 2);
-      // console.log(bcrypt.compareSync(data.password, hashnew));
+     
       if (bcrypt.compareSync(data.password, result[0].password)) {
         res.send(result[0].fullname);
       } else {
@@ -65,8 +66,7 @@ app.post("/user/signin", (req, res) => {
     .catch((err) => {
       res.send(err);
     });
-  // * if signin successful send data (id + name)
-  // res.send(req.body);
+
 });
 
 app.post("/user/signup", (req, res) => {
