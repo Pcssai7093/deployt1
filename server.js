@@ -8,12 +8,13 @@ const serviceConstructor = module.require("./Schemas/services");
 const bcrypt = require("bcrypt");
 const app = express();
 const cors = require("cors");
+const socket=require("socket.io")
 app.use(cors({ origin: true }));
 app.use(express.json());
 dotenv.config("./.env");
 mongoose.set("strictQuery", false);
 let port=process.env.port || 5000
-app.listen(port, () => {
+const server=app.listen(port, () => {
   console.log(`mongoose server running at port ${port}`);
   mongoose
     .connect(process.env.dbid)
@@ -32,6 +33,7 @@ app.listen(port, () => {
     });
 });
 
+const io=socket(server)
 app.get("/", (req, res) => {
   res.send(`server running at port ${port}`);
 });
