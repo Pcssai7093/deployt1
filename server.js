@@ -235,16 +235,6 @@ app.post("/admin/signin", (req, res) => {
     });
 });
 
-app.get("/users", (req, res) => {
-  userConstructor
-    .find()
-    .then((result) => {
-      res.send(result);
-    })
-    .catch((err) => {
-      res.send(err);
-    });
-});
 
 //* route for filter and pagination
 app.get(

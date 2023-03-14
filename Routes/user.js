@@ -48,6 +48,17 @@ router.post("/signup", (req, res) => {
     });
 });
 
+router.get("/", (req, res) => {
+  userConstructor
+    .find()
+    .then((result) => {
+      res.send(result);
+    })
+    .catch((err) => {
+      res.send(err);
+    });
+});
+
 
 router.get("/temp",(req,res)=>{
   res.send("test")
