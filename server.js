@@ -34,6 +34,13 @@ const server=app.listen(port, () => {
 });
 
 const io=socket(server)
+// * socket connection
+io.on("connection",(clientSocket)=>{
+  console.log(`new socket connection is established with socket ${clientSocket}`)
+});
+
+
+
 app.get("/", (req, res) => {
   res.send(`server running at port ${port}`);
 });
