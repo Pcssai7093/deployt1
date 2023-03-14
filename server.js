@@ -10,25 +10,25 @@ const app = express();
 const cors = require("cors");
 const socket=require("socket.io")
 const jwt=require("jsonwebtoken")
-
+const userRoutes=require("./Routes/user")
 
 
 app.use(cors({ origin: true }));
 app.use(express.json());
-
+app.use(userRoutes,"/user")
 
 dotenv.config("./.env");
 mongoose.set("strictQuery", false);
 let port=process.env.port || 5000
 
 
-function createToken(id){
-  let payload={
-    id:id,
-    age:1 * 24 * 60 * 60*2000
-  }
-  return jwt.sign(payload,process.env.secretKey);
-}
+// function createToken(id){
+//   let payload={
+//     id:id,
+//     age:1 * 24 * 60 * 60*2000
+//   }
+//   return jwt.sign(payload,process.env.secretKey);
+// }
 
 // console.log(createToken(24))
 
@@ -58,41 +58,45 @@ app.get("/", (req, res) => {
   res.send(`server running at port ${port}`);
 });
 
-app.post("/user/signin", (req, res) => {
-  let data = req.body;
-  let signin = false;
-  // console.log(data);
-  userConstructor
-    .find({ email: data.email })
-    .then((result) => {
+// app.post("/user/signin", (req, res) => {
+//   let data = req.body;
+//   let signin = false;
+//   // console.log(data);
+//   userConstructor
+//     .find({ email: data.email })
+//     .then((result) => {
      
-      if (bcrypt.compareSync(data.password, result[0].password)) {
-        res.send(result[0].fullname);
-      } else {
-        res.send("err");
-      }
-    })
-    .catch((err) => {
-      res.send(err);
-    });
+//       if (bcrypt.compareSync(data.password, result[0].password)) {
+        
+//         let jwtToken=createToken(result[0]._id);
+//         res.send(jwtToken);
+//       } else {
+//         res.send("err");
+//       }
+//     })
+//     .catch((err) => {
+//       res.send(err);
+//     });
 
-});
+// });
 
-app.post("/user/signup", (req, res) => {
-  let data = req.body;
-  userConstructor(data)
-    .save()
-    .then((response) => {
-      // console.log(response);
-      res.send(response._id);
-      // res.send(response);
-    })
-    .catch((err) => {
-      // console.log(err);
-      // * handle errors by parsing this err object
-      res.send(err);
-    });
-});
+// app.post("/user/signup", (req, res) => {
+//   let data = req.body;
+//   userConstructor(data)
+//     .save()
+//     .then((response) => {
+//       // console.log(response);
+//       res.send(response._id);
+//       // res.send(response);
+//     })
+//     .catch((err) => {
+//       // console.log(err);
+//       // * handle errors by parsing this err object
+//       res.send(err);
+//     });
+// });
+
+
 
 app.get("/services", (req, res) => {
   // console.log(serviceConstructor.populate("seller"));
