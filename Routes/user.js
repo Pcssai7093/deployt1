@@ -60,8 +60,40 @@ router.get("/", (req, res) => {
 });
 
 
+router.get("/:uid", (req, res) => {
+  userConstructor
+    .findOne({ _id: req.params.uid })
+    .populate("services")
+    .then((result) => {
+      res.send(result);
+    })
+    .catch((err) => {
+      res.send(err);
+    });
+});
+
+
+router.post("/update", (req, res) => {
+  // * user data update
+  const data = req.body;
+  const uid = data.uid;
+
+  delete data.uid;
+
+  userConstructor
+    .updateOne({ _id: uid }, data)
+    .then((result) => {
+      res.send(result);
+    })
+    .catch((err) => {
+      res.send(err);
+    });
+});
+
+
 router.get("/temp",(req,res)=>{
   res.send("test")
 })
+
 module.exports=router;
 
