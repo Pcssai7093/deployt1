@@ -53,6 +53,10 @@ const userSchema = new schema(
       type: [schema.Types.ObjectId],
       ref: "services",
     },
+    chats:{
+      type:[schema.Types.ObjectId],
+      ref:"chats"
+    }
   },
   { timestamps: true }
 );

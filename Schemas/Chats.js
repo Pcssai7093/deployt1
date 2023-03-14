@@ -5,15 +5,18 @@ const chatSchema=new schema(
   {
     user1:{
       type:schema.Types.ObjectId,
-      ref:"users"
+      ref:"users",
+      required:true
     },
     user2:{
       type:schema.Types.ObjectId,
-      ref:"users"
+      ref:"users",
+      required:true
     },
-    messages:[
-      
-    ]
+    messages:{
+      type:[schema.Types.ObjectId],
+      ref:"messages"
+    }
   },
   { timestamps: true });
 
