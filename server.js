@@ -54,7 +54,7 @@ app.post("/user/signin", (req, res) => {
     .then((result) => {
       // console.log(data.password);
       // console.log(result[0].password);
-      let hashnew = bcrypt.hashSync(data.password, 2);
+      // let hashnew = bcrypt.hashSync(data.password, 2);
       // console.log(bcrypt.compareSync(data.password, hashnew));
       if (bcrypt.compareSync(data.password, result[0].password)) {
         res.send(result[0].fullname);
