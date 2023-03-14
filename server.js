@@ -12,8 +12,9 @@ app.use(cors({ origin: true }));
 app.use(express.json());
 dotenv.config("./.env");
 mongoose.set("strictQuery", false);
-app.listen("5000", () => {
-  console.log("mongoose server running at port 5000 {after pushing to git from glitch}");
+let port=process.env.port || 5000
+app.listen(port, () => {
+  console.log(`mongoose server running at port ${port}`);
   mongoose
     .connect(process.env.dbid)
     .then(() => {
@@ -32,8 +33,9 @@ app.listen("5000", () => {
 });
 
 app.get("/", (req, res) => {
-  res.send("server running");
+  res.send(`server running at port ${port}`);
 });
+
 app.post("/user/signin", (req, res) => {
   let data = req.body;
   let signin = false;
