@@ -22,6 +22,15 @@ mongoose.set("strictQuery", false);
 let port=process.env.port || 5000
 
 
+function createToken(id){
+  let payload={
+    id:id,
+    age:1 * 24 * 60 * 60*2000
+  }
+  return jwt.sign(payload,process.env.secretKey);
+}
+
+// console.log(createToken(24))
 
 const server=app.listen(port, () => {
   console.log(`mongoose server running at port ${port}`);
