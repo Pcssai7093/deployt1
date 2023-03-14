@@ -63,14 +63,3 @@ const userSchema = new schema(
 
 const userConstructor = mongoose.model("users", userSchema);
 module.exports = userConstructor;
-
-// * encryting password function
-// async function encryptPassword(password) {
-//   let hash = await bcrypt.hash(password, 2);
-//   return hash;
-// }
-
-// ,
-//   adhaar: {
-//     type: String,
-//   }
