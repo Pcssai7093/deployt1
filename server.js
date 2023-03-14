@@ -5,32 +5,20 @@ const userConstructor = module.require("./Schemas/users");
 const mongoose = require("mongoose");
 const adminConstructor = module.require("./Schemas/admins");
 const serviceConstructor = module.require("./Schemas/services");
-const bcrypt = require("bcrypt");
 const app = express();
 const cors = require("cors");
 const socket=require("socket.io")
-const jwt=require("jsonwebtoken")
 const userRoutes=require("./Routes/user")
 
 
 app.use(cors({ origin: true }));
 app.use(express.json());
-app.use(userRoutes,"/user")
+app.use("/user",userRoutes)
 
 dotenv.config("./.env");
 mongoose.set("strictQuery", false);
 let port=process.env.port || 5000
 
-
-// function createToken(id){
-//   let payload={
-//     id:id,
-//     age:1 * 24 * 60 * 60*2000
-//   }
-//   return jwt.sign(payload,process.env.secretKey);
-// }
-
-// console.log(createToken(24))
 
 const server=app.listen(port, () => {
   console.log(`mongoose server running at port ${port}`);
@@ -193,6 +181,8 @@ app.post("/wishlist/delete", (req, res) => {
       res.send(err);
     });
 });
+
+
 
 app.get("/user/:uid", (req, res) => {
   userConstructor

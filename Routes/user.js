@@ -24,12 +24,13 @@ router.post("/signin", (req, res) => {
         
         let jwtToken=createToken(result[0]._id);
         res.send(jwtToken);
+        // * use token to protect routes in the frontend
       } else {
         res.send("err");
       }
     })
     .catch((err) => {
-      res.send(err);
+      res.send(false);
     });
 
 });
@@ -39,17 +40,17 @@ router.post("/signup", (req, res) => {
   userConstructor(data)
     .save()
     .then((response) => {
-      // console.log(response);
-      res.send(response._id);
-      // res.send(response);
+      res.send(true);
+//     * redirect to login page
     })
     .catch((err) => {
-      // console.log(err);
-      // * handle errors by parsing this err object
-      res.send(err);
+      res.send(false);
     });
 });
 
-router.get("/temp",)
+
+router.get("/temp",(req,res)=>{
+  res.send("test")
+})
 module.exports=router;
 
