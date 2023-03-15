@@ -7,7 +7,7 @@ router.get("/temp",(req,res)=>{
   res.send("chat temp");
 });
 
-router.get("/coversation/:uid",(req,res)=>{
+router.get("/conversation/:uid",(req,res)=>{
   let uid=req.params.uid
   conversationConstructor.find({$or:[{user1:uid},{user2:uid}]})
   .then((result)=>{
@@ -50,7 +50,7 @@ router.post("/message/add/:cid",(req,res)=>{
     let uid2=data.to;
     
     let update = { $push: { messages: [msgId] } };
-    conversationConstructor.update({_id:cid},update)
+    conversationConstructor.updateOne({_id:cid},update)
     .then((result2)=>{
       res.send(result2);
     })
@@ -88,7 +88,27 @@ router.post("/conversation/add",(req,res)=>{
         conversationConstructor(data)
         .save()
         .then((result)=>{
-          res.send(result);
+          let conversationId=result._id;
+          // adding conversation id's to user's data
+          
+          let update = { $push: { conversations: [conversationId] } };
+          userConstructor.updateOne({_id:uid1},update)
+            .then((result2)=>{
+              // res.send(result2);
+            })
+            .catch((err)=>{
+              res.send(err)
+            })
+          
+          userConstructor.update({_id:uid2},update)
+            .then((result2)=>{
+              // res.send(result2);
+            })
+            .catch((err)=>{
+              res.send(err)
+            })
+          res.send(result);  
+          
         })
         .catch((err)=>{
           res.send("error")
