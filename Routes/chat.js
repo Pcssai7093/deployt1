@@ -34,7 +34,7 @@ router.post("/message/add/:cid",(req,res)=>{
 //   body contains two user id's and messages
 //   conversationId
   const cid=req.params.cid
-  const data=req.body.data;
+  const data=req.body;
 //   data obj format
   // {
   //   from:uid1
@@ -64,7 +64,8 @@ router.post("/message/add/:cid",(req,res)=>{
 });
 
 router.post("/conversation/add",(req,res)=>{
-  const data=req.body.data;
+  // res.send("hello");
+  const data=req.body;
   //   data obj format
   // {
   //   user1:uid1
@@ -94,6 +95,9 @@ router.post("/conversation/add",(req,res)=>{
       res.send("conversation already exists")
     }
     
+  })
+  .catch((err)=>{
+    res.send("err2")
   })
 });
 
