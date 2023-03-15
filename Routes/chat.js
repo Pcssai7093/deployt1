@@ -29,11 +29,30 @@ router.get("/message/:conversationId",(req,res)=>{
 router.post("/message/add",(req,res)=>{
 //   body contains two user id's and messages
   const data=req.body.data;
+//   data obj format
+  // {
+  //   from:uid1
+  //   to:uid2
+  //   message:"msg"
+  // }
+  messageConstructor(data)
+  .save()
+  .then((result)=>{
+    let msgId=result[0].id
+  })
+  .catch((err)=>{
+    console.log("error")
+  })
   
 });
 
 router.post("/conversation/add",(req,res)=>{
   const data=req.body.data;
+  //   data obj format
+  // {
+  //   user1:uid1
+  //   user2:uid2
+  // }
   const uid1=data.user1;
   const uid2=data.user2;
   conversationConstructor.find({$or:
