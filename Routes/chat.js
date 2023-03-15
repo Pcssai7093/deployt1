@@ -3,12 +3,22 @@ const messageConstructor = module.require("../Schemas/message");
 const conversationConstructor = module.require("../Schemas/conversation");
 
 
-router.get("/coversations/:uid",(req,res)=>{
+router.get("/coversation/:uid",(req,res)=>{
+  conversationConstructor.find({})
+});
+
+router.get("/message/:conversationId",(req,res)=>{
   
 });
 
-router.get("/messages/:uid1/:uid2",(req,res)=>{
+router.post("/message/add",(req,res)=>{
+//   body contains two user id's and messages
+  const data=req.body.data;
   
+});
+
+router.post("/conversation/add",(req,res)=>{
+  const data=req.body.data;
 });
 
 module.exports=router;
