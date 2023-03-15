@@ -7,6 +7,7 @@ router.get("/temp",(req,res)=>{
   res.send("chat temp");
 });
 
+// retrieving conversations for a user
 router.get("/conversation/:uid",(req,res)=>{
   let uid=req.params.uid
   conversationConstructor.find({$or:[{user1:uid},{user2:uid}]})
@@ -18,6 +19,8 @@ router.get("/conversation/:uid",(req,res)=>{
   })
 });
 
+
+// retrieving messages for a conversation
 router.get("/message/:conversationId",(req,res)=>{
   let cid=req.params.conversationId
   conversationConstructor.find({_id:cid})
@@ -30,6 +33,8 @@ router.get("/message/:conversationId",(req,res)=>{
   })
 });
 
+
+// adding messages in a conversation
 router.post("/message/add/:cid",(req,res)=>{
 //   body contains two user id's and messages
 //   conversationId
@@ -65,6 +70,9 @@ router.post("/message/add/:cid",(req,res)=>{
   })
   
 });
+
+
+// adding adding conversation for users
 
 router.post("/conversation/add",(req,res)=>{
   // res.send("hello");
