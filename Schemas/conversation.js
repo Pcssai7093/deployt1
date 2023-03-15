@@ -20,5 +20,5 @@ const conversationSchema=new schema(
   },
   { timestamps: true });
 
-const conversationConstructor=mongoose.model("chats",conversationSchema);
+const conversationConstructor=mongoose.model("conversations",conversationSchema);
 module.exports=conversationConstructor;
