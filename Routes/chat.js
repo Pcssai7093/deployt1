@@ -3,6 +3,9 @@ const messageConstructor = module.require("../Schemas/message");
 const conversationConstructor = module.require("../Schemas/conversation");
 const userConstructor = module.require("../Schemas/users");
 
+router.get("/temp",(req,res)=>{
+  res.send("chat temp");
+});
 
 router.get("/coversation/:uid",(req,res)=>{
   let uid=req.params.uid
@@ -27,8 +30,10 @@ router.get("/message/:conversationId",(req,res)=>{
   })
 });
 
-router.post("/message/add",(req,res)=>{
+router.post("/message/add/:cid",(req,res)=>{
 //   body contains two user id's and messages
+//   conversationId
+  const cid=req.params.cid
   const data=req.body.data;
 //   data obj format
   // {
@@ -40,7 +45,17 @@ router.post("/message/add",(req,res)=>{
   .save()
   .then((result)=>{
     let msgId=result[0]._id;
-    userConstructor.update({})
+    let uid1=data.from
+    let uid2=data.to;
+    
+    let update = { $push: { messages: [msgId] } };
+    conversationConstructor.update({_id:cid},update)
+    .then((result)=>{
+      res.send(result);
+    })
+    .catch((err)=>{
+      res.send("error")
+    })
   })
   .catch((err)=>{
     console.log("error")
