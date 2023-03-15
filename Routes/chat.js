@@ -1,6 +1,7 @@
 const router=require("express").Router()
 const messageConstructor = module.require("../Schemas/message");
 const conversationConstructor = module.require("../Schemas/conversation");
+const userConstructor = module.require("../Schemas/users");
 
 
 router.get("/coversation/:uid",(req,res)=>{
@@ -38,7 +39,8 @@ router.post("/message/add",(req,res)=>{
   messageConstructor(data)
   .save()
   .then((result)=>{
-    let msgId=result[0].id
+    let msgId=result[0]._id;
+    userConstructor.update({})
   })
   .catch((err)=>{
     console.log("error")
