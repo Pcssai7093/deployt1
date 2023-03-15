@@ -42,23 +42,26 @@ router.post("/message/add/:cid",(req,res)=>{
   //   message:"msg"
   // }
   messageConstructor(data)
-  .save()
-  .then((result)=>{
-    let msgId=result[0]._id;
+    .save()
+    .then((result)=>{
+    
+    let msgId=result._id;
     let uid1=data.from
     let uid2=data.to;
     
     let update = { $push: { messages: [msgId] } };
     conversationConstructor.update({_id:cid},update)
-    .then((result)=>{
-      res.send(result);
+    .then((result2)=>{
+      res.send(result2);
     })
     .catch((err)=>{
-      res.send("error")
+      res.send(err)
     })
+    
+    // res.send(result)
   })
-  .catch((err)=>{
-    res.send("error")
+    .catch((err)=>{
+    res.send(err)
   })
   
 });
