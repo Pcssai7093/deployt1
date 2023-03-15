@@ -58,7 +58,7 @@ router.post("/message/add/:cid",(req,res)=>{
     })
   })
   .catch((err)=>{
-    console.log("error")
+    res.send("error")
   })
   
 });
