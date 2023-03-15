@@ -16,7 +16,7 @@ const chatRoutes=require("./Routes/chat")
 app.use(cors({ origin: true }));
 app.use(express.json());
 app.use("/user",userRoutes)
-app.use("/service",userRoutes)
+app.use("/service",serviceRoutes)
 app.use("/wishlist",wishlistRoutes)
 app.use("/chat",chatRoutes)
 
