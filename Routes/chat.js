@@ -43,9 +43,21 @@ router.post("/conversation/add",(req,res)=>{
                                 ]
                                })
     .then((result)=>{
-      if(result.length>0){
-        
-      }
+      
+    if(result.length==0){
+        conversationConstructor(data)
+        .save()
+        .then((result)=>{
+          res.send(result);
+        })
+        .catch((err)=>{
+          res.send("error")
+        })
+    }
+    else{
+      res.send("conversation already exists")
+    }
+    
   })
 });
 
