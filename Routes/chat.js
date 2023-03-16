@@ -58,7 +58,13 @@ router.post("/message/add/:cid",(req,res)=>{
     let uid2=data.to;
     
     let update = { $push: { messages: [msgId] } };
-    conversationConstructor.updateOne({_id:cid},update)
+    conversationConstructor.updateOne({$and:
+                                [
+                                  {_id:cid},
+                                  {users:uid1},
+                                  {users:uid2}
+                                ]
+                               },update)
     .then((result2)=>{
       res.send(result2);
     })
