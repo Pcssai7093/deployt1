@@ -11,6 +11,7 @@ router.get("/temp",(req,res)=>{
 router.get("/conversation/:uid",(req,res)=>{
   let uid=req.params.uid
   conversationConstructor.find({$or:[{user1:uid},{user2:uid}]})
+  .populate("user1","fullname")
   .then((result)=>{
     res.send(result);
   })
@@ -24,7 +25,7 @@ router.get("/conversation/:uid",(req,res)=>{
 router.get("/message/:conversationId",(req,res)=>{
   let cid=req.params.conversationId
   conversationConstructor.find({_id:cid})
-  .populate("messages")
+  .populate("messages","message")
   .then((result)=>{
     res.send(result);
   })
