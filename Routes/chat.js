@@ -10,20 +10,13 @@ router.get("/temp",(req,res)=>{
 // retrieving conversations for a user
 router.get("/conversation/:uid",(req,res)=>{
   let uid=req.params.uid
-  conversationConstructor.aggregate([
-    {
-      $match:{
-        $or:[
-          {user2:uid}
-        ]
-      }
-    }
-  ]).then((result)=>{
-    res.send(result);
-  })
+   conversationConstructor.aggregate()
+  .then((result)=>{
+     res.send(result);
+   })
   .catch((err)=>{
-    res.send("error")
-  })
+     res.send(err);
+   })
   
   // conversationConstructor.find({$or:[{user1:uid},{user2:uid}]})
   // .populate("user1","fullname")
