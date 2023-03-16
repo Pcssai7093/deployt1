@@ -38,7 +38,8 @@ router.get("/message/:conversationId",(req,res)=>{
 
 
 // adding messages in a conversation
-router.post("/message/add/:cid",(req,res)=>{
+router.post("/message/add",(req,res)=>{
+  // no conversation id is needed
 //   body contains two user id's and messages
 //   conversationId
   const cid=req.params.cid
@@ -53,26 +54,26 @@ router.post("/message/add/:cid",(req,res)=>{
     .save()
     .then((result)=>{
     
-    let msgId=result._id;
-    let uid1=data.from
-    let uid2=data.to;
+//     let msgId=result._id;
+//     let uid1=data.from
+//     let uid2=data.to;
     
-    let update = { $push: { messages: [msgId] } };
-    conversationConstructor.updateOne({$and:
-                                [
-                                  {_id:cid},
-                                  {users:uid1},
-                                  {users:uid2}
-                                ]
-                               },update)
-    .then((result2)=>{
-      res.send(result2);
-    })
-    .catch((err)=>{
-      res.send(err)
-    })
+//     let update = { $push: { messages: [msgId] } };
+//     conversationConstructor.updateOne({$and:
+//                                 [
+//                                   {_id:cid},
+//                                   {users:uid1},
+//                                   {users:uid2}
+//                                 ]
+//                                },update)
+//     .then((result2)=>{
+//       res.send(result2);
+//     })
+//     .catch((err)=>{
+//       res.send(err)
+//     })
     
-    // res.send(result)
+    res.send(result)
   })
     .catch((err)=>{
     res.send(err)
@@ -105,25 +106,6 @@ router.post("/conversation/add",(req,res)=>{
         conversationConstructor({users:[uid1,uid2]})
         .save()
         .then((result)=>{
-//           let conversationId=result._id;
-//           // adding conversation id's to user's data
-          
-//           let update = { $push: { conversations: [conversationId] } };
-//           userConstructor.updateOne({_id:uid1},update)
-//             .then((result2)=>{
-//               // res.send(result2);
-//             })
-//             .catch((err)=>{
-//               res.send(err)
-//             })
-          
-//           userConstructor.update({_id:uid2},update)
-//             .then((result2)=>{
-//               // res.send(result2);
-//             })
-//             .catch((err)=>{
-//               res.send(err)
-//             })
           res.send(result);  
           
         })
