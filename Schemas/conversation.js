@@ -3,15 +3,9 @@ const schema = require("mongoose").Schema;
 
 const conversationSchema=new schema(
   {
-    user1:{
-      type:schema.Types.ObjectId,
-      ref:"users",
-      required:true
-    },
-    user2:{
-      type:schema.Types.ObjectId,
-      ref:"users",
-      required:true
+    users:{
+      type:[schema.Types.ObjectId],
+      ref:"users"
     },
     messages:{
       type:[schema.Types.ObjectId],

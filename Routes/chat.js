@@ -94,16 +94,16 @@ router.post("/conversation/add",(req,res)=>{
   // }
   const uid1=data.user1;
   const uid2=data.user2;
-  conversationConstructor.find({$or:
+  conversationConstructor.find({$and:
                                 [
-                                  {user1:uid1,user2:uid2},
-                                  {user1:uid2,user2:uid1}
+                                  {users:{$contains:uid1}},
+                                  {users:{$contains:uid2}}
                                 ]
                                })
     .then((result)=>{
       
     if(result.length==0){
-        conversationConstructor(data)
+        conversationConstructor({users:[uid1,uid2]})
         .save()
         .then((result)=>{
           let conversationId=result._id;
