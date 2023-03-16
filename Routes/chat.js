@@ -105,25 +105,25 @@ router.post("/conversation/add",(req,res)=>{
         conversationConstructor({users:[uid1,uid2]})
         .save()
         .then((result)=>{
-          let conversationId=result._id;
-          // adding conversation id's to user's data
+//           let conversationId=result._id;
+//           // adding conversation id's to user's data
           
-          let update = { $push: { conversations: [conversationId] } };
-          userConstructor.updateOne({_id:uid1},update)
-            .then((result2)=>{
-              // res.send(result2);
-            })
-            .catch((err)=>{
-              res.send(err)
-            })
+//           let update = { $push: { conversations: [conversationId] } };
+//           userConstructor.updateOne({_id:uid1},update)
+//             .then((result2)=>{
+//               // res.send(result2);
+//             })
+//             .catch((err)=>{
+//               res.send(err)
+//             })
           
-          userConstructor.update({_id:uid2},update)
-            .then((result2)=>{
-              // res.send(result2);
-            })
-            .catch((err)=>{
-              res.send(err)
-            })
+//           userConstructor.update({_id:uid2},update)
+//             .then((result2)=>{
+//               // res.send(result2);
+//             })
+//             .catch((err)=>{
+//               res.send(err)
+//             })
           res.send(result);  
           
         })
