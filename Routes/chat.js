@@ -8,7 +8,7 @@ router.get("/temp",(req,res)=>{
 });
 
 // retrieving conversations for a user
-router.get("/conversation/:uid",(req,res)=>{
+  router.get("/conversation/:uid",(req,res)=>{
   let uid=req.params.uid
   
   conversationConstructor.find({users:uid})
