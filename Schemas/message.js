@@ -22,13 +22,14 @@ const messageSchema=new schema(
 
 messageSchema.pre('save',async function(next){
   let update = { $push: { messages: [this._id] } };
-    conversationConstructor.updateOne({$and:
+    await conversationConstructor.updateOne({$and:
                                 [
-                                  {users:[this.from,this.to]}
+                                  {users:this.from},
+                                  {users:this.to}
                                 ]
                                },update)
     .then((result2)=>{
-      // res.send(result2);
+      console.log(result2);
     })
     .catch((err)=>{
       console.log(err)

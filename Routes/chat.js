@@ -53,26 +53,7 @@ router.post("/message/add",(req,res)=>{
   messageConstructor(data)
     .save()
     .then((result)=>{
-    
-//     let msgId=result._id;
-//     let uid1=data.from
-//     let uid2=data.to;
-    
-//     let update = { $push: { messages: [msgId] } };
-//     conversationConstructor.updateOne({$and:
-//                                 [
-//                                   {_id:cid},
-//                                   {users:uid1},
-//                                   {users:uid2}
-//                                 ]
-//                                },update)
-//     .then((result2)=>{
-//       res.send(result2);
-//     })
-//     .catch((err)=>{
-//       res.send(err)
-//     })
-    
+
     res.send(result)
   })
     .catch((err)=>{
