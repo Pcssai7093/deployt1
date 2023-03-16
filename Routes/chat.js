@@ -10,29 +10,22 @@ router.get("/temp",(req,res)=>{
 // retrieving conversations for a user
 router.get("/conversation/:uid",(req,res)=>{
   let uid=req.params.uid
-   conversationConstructor.aggregate()
-  .then((result)=>{
-     res.send(result);
-   })
-  .catch((err)=>{
-     res.send(err);
-   })
   
-  // conversationConstructor.find({$or:[{user1:uid},{user2:uid}]})
-  // .populate("user1","fullname")
-  // .then((result)=>{
-  //   res.send(result);
-  // })
-  // .catch((err)=>{
-  //   res.send("error")
-  // })
+  conversationConstructor.find({users:uid})
+  .populate("users","fullname")
+  .then((result)=>{
+    res.send(result);
+  })
+  .catch((err)=>{
+    res.send("error")
+  })
   
 });
 
 
 // retrieving messages for a conversation
 router.get("/message/:conversationId",(req,res)=>{
-  let cid=req.params.conversationId
+  let cid=req.params.conversationIdc
   conversationConstructor.find({_id:cid})
   .populate("messages","message")
   .then((result)=>{
@@ -96,8 +89,8 @@ router.post("/conversation/add",(req,res)=>{
   const uid2=data.user2;
   conversationConstructor.find({$and:
                                 [
-                                  {users:{$contains:uid1}},
-                                  {users:{$contains:uid2}}
+                                  {users:uid1},
+                                  {users:uid2}
                                 ]
                                })
     .then((result)=>{
