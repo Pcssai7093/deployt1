@@ -43,13 +43,11 @@ const server=app.listen(port, () => {
 
 //  socket.io code
 
-// * user variable maintains all the 
+// * users variable maintains all the active socket connections with key userId
 let users={}
 
 function addUser(socketId,userId){
-  // !users.some((obj)=>{return (obj.userId==userId)}) && users.push({userId,socketId});
   users[userId]=socketId
-  console.log(users)
 }
 
 const io=socket(server,{ cors: {
@@ -57,28 +55,17 @@ const io=socket(server,{ cors: {
     methods: ["GET", "POST"]
   }})
 io.on("connection",(clientSocket)=>{
-  // console.log(`new socket connection is established with socket ${clientSocket.id}`)
+ 
   io.emit("welcome","Server: :) hello u r connected");
   
   clientSocket.on("addUser",(userId)=>{
-    console.log(`connected userId is ${userId}`)
     addUser(clientSocket.id,userId)
   });
   
   clientSocket.on("sendMessage",(fromUserId,toUserId,Message)=>{
-    console.log("in sendMessage event");
     let toSocketId=users[toUserId]
-    console.log(users,toUserId)
-    // console.log(toSocketId)
-    // let s=users.length
-    // for(let i=0;i<s;i++){
-    //   if(users[i].userId==toUserId){
-    //     toSocketId=users[i].socketId;
-    //     break;
-    //   }
-    // }
+   
     if(toSocketId){
-      console.log("before emit")
       clientSocket.to(toSocketId).emit("receiveMessage",fromUserId,toUserId,Message);
     }
   })
