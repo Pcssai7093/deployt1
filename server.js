@@ -64,6 +64,20 @@ io.on("connection",(clientSocket)=>{
     addUser(clientSocket.id,userId)
   });
   
+  clientSocket.on("sendMessage",(toUserId,Message)=>{
+    let toSocketId=false
+    let s=users.length
+    for(let i=0;i<s;i++){
+      if(users[i].userId==toUserId){
+        toSocketId=users[i].socketId;
+        break;
+      }
+    }
+    if(toSocketId){
+      clientSocket.to(toSocketId).emit("receiveMessage",toUserId)
+    }
+  })
+  
 });
 
 
