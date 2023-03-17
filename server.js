@@ -64,7 +64,8 @@ io.on("connection",(clientSocket)=>{
     addUser(clientSocket.id,userId)
   });
   
-  clientSocket.on("sendMessage",(toUserId,Message)=>{
+  clientSocket.on("sendMessage",(fromUserId,toUserId,Message)=>{
+    console.log("in sendMessage event");
     let toSocketId=false
     let s=users.length
     for(let i=0;i<s;i++){
@@ -74,7 +75,8 @@ io.on("connection",(clientSocket)=>{
       }
     }
     if(toSocketId){
-      clientSocket.to(toSocketId).emit("receiveMessage",toUserId)
+      console.log("before emit")
+      clientSocket.to(toSocketId).emit("receiveMessage",fromUserId,toUserId,Message+"from "+fromUserId);
     }
   })
   
