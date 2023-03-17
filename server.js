@@ -44,10 +44,11 @@ const server=app.listen(port, () => {
 //  socket.io code
 
 // * user variable maintains all the 
-let users=[]
+let users={}
 
 function addUser(socketId,userId){
-  !users.some((obj)=>{return (obj.userId==userId)}) && users.push({userId,socketId});
+  // !users.some((obj)=>{return (obj.userId==userId)}) && users.push({userId,socketId});
+  users[userId]=socketId
   console.log(users)
 }
 
@@ -66,14 +67,16 @@ io.on("connection",(clientSocket)=>{
   
   clientSocket.on("sendMessage",(fromUserId,toUserId,Message)=>{
     console.log("in sendMessage event");
-    let toSocketId=false
-    let s=users.length
-    for(let i=0;i<s;i++){
-      if(users[i].userId==toUserId){
-        toSocketId=users[i].socketId;
-        break;
-      }
-    }
+    let toSocketId=users[toUserId]
+    console.log(users,toUserId)
+    // console.log(toSocketId)
+    // let s=users.length
+    // for(let i=0;i<s;i++){
+    //   if(users[i].userId==toUserId){
+    //     toSocketId=users[i].socketId;
+    //     break;
+    //   }
+    // }
     if(toSocketId){
       console.log("before emit")
       clientSocket.to(toSocketId).emit("receiveMessage",fromUserId,toUserId,Message+"from "+fromUserId);
