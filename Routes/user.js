@@ -2,9 +2,9 @@ const router=require("express").Router()
 const bcrypt = require("bcrypt");
 const userConstructor = module.require("../Schemas/users");
 const jwt=require("jsonwebtoken")
+const auth=require("../Middlewares/authorization")
 
-
-router.get("/", (req, res) => {
+router.get("/",auth,(req, res) => {
   userConstructor
     .find()
     .then((result) => {

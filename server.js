@@ -7,6 +7,7 @@ const bcrypt = require("bcrypt");
 const app = express();
 const cors = require("cors");
 const socket=require("socket.io")
+const cookieParser = require("cookie-parser");
 
 const userRoutes=require("./Routes/user")
 const serviceRoutes=require("./Routes/service")
@@ -15,7 +16,8 @@ const chatRoutes=require("./Routes/chat")
 
 app.use(cors({ origin: true }));
 app.use(express.json());
-app.use("/user",userRoutes)
+app.use(cookieParser())
+app.use("/user",userRoutes  )
 app.use("/service",serviceRoutes)
 app.use("/wishlist",wishlistRoutes)
 app.use("/chat",chatRoutes)
