@@ -41,11 +41,13 @@ const server=app.listen(port, () => {
 });
 
 
-// const io=socket(server)
-// * socket connection
-// io.on("connection",(clientSocket)=>{
-//   console.log(`new socket connection is established with socket ${clientSocket}`)
-// });
+const io=socket(server,{ cors: {
+    origin: "http://localhost:3000",
+    methods: ["GET", "POST"]
+  }})
+io.on("connection",(clientSocket)=>{
+  console.log(`new socket connection is established with socket ${clientSocket}`)
+});
 
 
 
