@@ -4,36 +4,7 @@ const userConstructor = module.require("../Schemas/users");
 const jwt=require("jsonwebtoken")
 
 
-function createToken(id){
-  let payload={
-    id:id,
-    age:1 * 24 * 60 * 60*2000
-  }
-  return jwt.sign(payload,process.env.secretKey);
-}
 
-router.post("/signin", (req, res) => {
-  let data = req.body;
-  let signin = false;
-  // console.log(data);
-  userConstructor
-    .find({ email: data.email })
-    .then((result) => {
-     
-      if (bcrypt.compareSync(data.password, result[0].password)) {
-        
-        let jwtToken=createToken(result[0]._id);
-        res.send(jwtToken);
-        // * use token to protect routes in the frontend
-      } else {
-        res.send("err");
-      }
-    })
-    .catch((err) => {
-      res.send(false);
-    });
-
-});
 
 router.post("/signup", (req, res) => {
   let data = req.body;
@@ -94,6 +65,40 @@ router.post("/update", (req, res) => {
 router.get("/temp",(req,res)=>{
   res.send("test")
 })
+
+
+function createToken(id){
+  let payload={
+    id:id,
+    age:1 * 24 * 60 * 60*2000
+  }
+  return jwt.sign(payload,process.env.secretKey);
+}
+
+router.post("/chandra/signin", (req, res) => {
+  let data = req.body;
+  let signin = false;
+  // console.log(data);
+  userConstructor
+    .find({ email: data.email })
+    .then((result) => {
+     
+      if (bcrypt.compareSync(data.password, result[0].password)) {
+        
+        let jwtToken=createToken(result[0]._id);
+        res.send(jwtToken);
+        // * use token to protect routes in the frontend
+      } else {
+        res.send("err");
+      }
+    })
+    .catch((err) => {
+      res.send(false);
+    });
+
+});
+
+
 
 module.exports=router;
 
