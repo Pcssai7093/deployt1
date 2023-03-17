@@ -43,6 +43,7 @@ const server=app.listen(port, () => {
 
 //  socket.io code
 
+// * user variable maintains all the 
 let users=[]
 
 function addUser(socketId,userId){
@@ -64,11 +65,6 @@ io.on("connection",(clientSocket)=>{
   });
   
 });
-
-
-
-
-
 
 
 app.get("/", (req, res) => {
