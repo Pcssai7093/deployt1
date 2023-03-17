@@ -66,7 +66,7 @@ io.on("connection",(clientSocket)=>{
   
   clientSocket.on("sendMessage",(fromUserId,toUserId,Message)=>{
     let toSocketId=users[toUserId]
-   
+   console.log("send Message request");
     if(toSocketId){
       clientSocket.to(toSocketId).emit("receiveMessage",fromUserId,toUserId,Message);
     }
