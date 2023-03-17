@@ -48,6 +48,9 @@ const io=socket(server,{ cors: {
 io.on("connection",(clientSocket)=>{
   // console.log(`new socket connection is established with socket ${clientSocket.id}`)
   io.emit("welcome","Server: :) hello u r connected");
+  
+  
+  io.on("")
 });
 
 
