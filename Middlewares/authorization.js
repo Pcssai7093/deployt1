@@ -7,11 +7,19 @@ const auth=(req,res,next)=>{
   // }
   const cookie=req.cookies;
   const jwtTokenVal=cookie.jwt
-  jwt.verify(jwtTokenVal,process.env.secretKey,(err,tokenData)=>{
-    console.log("user is valied")
-  })
+  if(!jwtTokenVal){
+    res.send("please sign in")
+  }
+  else{
+    jwt.verify(jwtTokenVal,process.env.secretKey,(err,tokenData)=>{
+      if(err){
+        res.send("please sign in")
+      }
+      console.log("user is valid")
+    })
+    next();
+  }
   
-  next();
 
   
   // this auth middleware should be added to all routes and 
