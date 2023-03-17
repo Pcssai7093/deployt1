@@ -58,7 +58,7 @@ const io=socket(server,{ cors: {
   }})
 io.on("connection",(clientSocket)=>{
  
-  io.emit("welcome","Server: :) hello u r connected");
+  // io.to(clientSocket).emit("welcome","Server: :) hello u r connected");
   
   clientSocket.on("addUser",(userId)=>{
     addUser(clientSocket.id,userId)
