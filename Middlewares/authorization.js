@@ -5,8 +5,12 @@ const auth=(req,res,next)=>{
   // {
   //   jwt:jwt_Token_Val
   // }
-  const =
-  console.log(req.cookies)
+  const cookie=req.cookies;
+  const jwtTokenVal=cookie.jwt
+  jwt.verify(jwtTokenVal,process.env.secretKey,(err,tokenData)=>{
+    console.log("user is valied")
+  })
+  
   next();
 
   
