@@ -94,7 +94,10 @@ router.post("/chandra/signin", (req, res) => {
         
         let jwtToken=createToken(result[0]._id);
         res.send(jwtToken);
-        // * use token to protect routes in the frontend
+        // * user need to set this jwttoken in a cookie in format
+          // {
+          //   jwt:jwt_Token_Val
+          // }
       } else {
         res.send("password not matched");
       }
