@@ -4,21 +4,6 @@ const userConstructor = module.require("../Schemas/users");
 const jwt=require("jsonwebtoken")
 
 
-
-
-router.post("/signup", (req, res) => {
-  let data = req.body;
-  userConstructor(data)
-    .save()
-    .then((response) => {
-      res.send(true);
-//     * redirect to login page
-    })
-    .catch((err) => {
-      res.send(false);
-    });
-});
-
 router.get("/", (req, res) => {
   userConstructor
     .find()
@@ -67,6 +52,28 @@ router.get("/temp",(req,res)=>{
 })
 
 
+
+
+
+
+
+// ------------------------------------------------------
+//  chandra's code
+
+router.post("/chandra/signup", (req, res) => {
+  let data = req.body;
+  userConstructor(data)
+    .save()
+    .then((response) => {
+      res.send(true);
+//     * redirect to login page
+    })
+    .catch((err) => {
+      res.send(false);
+    });
+});
+
+
 function createToken(id){
   let payload={
     id:id,
@@ -89,11 +96,11 @@ router.post("/chandra/signin", (req, res) => {
         res.send(jwtToken);
         // * use token to protect routes in the frontend
       } else {
-        res.send("err");
+        res.send("password not matched");
       }
     })
     .catch((err) => {
-      res.send(false);
+      res.send(err);
     });
 
 });
