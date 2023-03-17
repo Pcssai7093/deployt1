@@ -41,6 +41,10 @@ const server=app.listen(port, () => {
 });
 
 
+//  socket.io code
+
+let users=[]
+
 
 
 const io=socket(server,{ cors: {
@@ -51,18 +55,12 @@ io.on("connection",(clientSocket)=>{
   // console.log(`new socket connection is established with socket ${clientSocket.id}`)
   io.emit("welcome","Server: :) hello u r connected");
   
-  clientSocket.on("transmitUserId",(userId)=>{
+  clientSocket.on("addUser",(userId)=>{
     console.log(`connected userId is ${userId}`)
+    
   });
   
 });
-
-
-
-
-
-
-
 
 
 
