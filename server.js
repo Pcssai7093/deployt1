@@ -79,7 +79,7 @@ io.on("connection",(clientSocket)=>{
     // }
     if(toSocketId){
       console.log("before emit")
-      clientSocket.to(toSocketId).emit("receiveMessage",fromUserId,toUserId,Message+"from "+fromUserId);
+      clientSocket.to(toSocketId).emit("receiveMessage",fromUserId,toUserId,Message);
     }
   })
   
