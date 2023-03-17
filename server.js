@@ -41,6 +41,8 @@ const server=app.listen(port, () => {
 });
 
 
+
+
 const io=socket(server,{ cors: {
     origin: "http://localhost:3000",
     methods: ["GET", "POST"]
@@ -49,9 +51,22 @@ io.on("connection",(clientSocket)=>{
   // console.log(`new socket connection is established with socket ${clientSocket.id}`)
   io.emit("welcome","Server: :) hello u r connected");
   
+  clientSocket.on("transmitUserId",(userId)=>{
+    console.log(`connected userId is ${userId}`)
+  });
   
-  io.on("")
 });
+
+
+
+
+
+
+
+
+
+
+
 
 
 
