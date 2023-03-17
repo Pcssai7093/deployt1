@@ -45,7 +45,10 @@ const server=app.listen(port, () => {
 
 let users=[]
 
-
+function addUser(socketId,userId){
+  !users.some((obj)=>{return (obj.userId==userId)}) && users.push({userId,socketId});
+  console.log(users)
+}
 
 const io=socket(server,{ cors: {
     origin: "http://localhost:3000",
@@ -57,7 +60,7 @@ io.on("connection",(clientSocket)=>{
   
   clientSocket.on("addUser",(userId)=>{
     console.log(`connected userId is ${userId}`)
-    
+    addUser(clientSocket.id,userId)
   });
   
 });
