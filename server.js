@@ -11,6 +11,7 @@ const app = express();
 const cors = require("cors");
 const socket=require("socket.io")
 const cookieParser = require("cookie-parser");
+const morgan=require("morgan")
 
 const userRoutes=require("./Routes/user")
 const serviceRoutes=require("./Routes/service")
@@ -24,7 +25,7 @@ app.use("/user",userRoutes  )
 app.use("/service",serviceRoutes)
 app.use("/wishlist",wishlistRoutes)
 app.use("/chat",chatRoutes)
-
+app.use(morgan("tiny"));
 
 dotenv.config("./.env");
 mongoose.set("strictQuery", false);
