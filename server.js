@@ -53,7 +53,7 @@ function addUser(socketId,userId){
 }
 
 const io=socket(server,{ cors: {
-    origin: "http://localhost:3000",
+    origin: ["http://localhost:3000","http://localhost:3001"],
     methods: ["GET", "POST"]
   }})
 io.on("connection",(clientSocket)=>{
