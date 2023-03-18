@@ -18,6 +18,7 @@ const serviceRoutes=require("./Routes/service")
 const wishlistRoutes=require("./Routes/wishlist")
 const chatRoutes=require("./Routes/chat")
 
+app.use(morgan("combined"));
 app.use(cors({ origin: true }));
 app.use(express.json());
 app.use(cookieParser())
@@ -25,7 +26,8 @@ app.use("/user",userRoutes  )
 app.use("/service",serviceRoutes)
 app.use("/wishlist",wishlistRoutes)
 app.use("/chat",chatRoutes)
-app.use(morgan("tiny"));
+
+
 
 dotenv.config("./.env");
 mongoose.set("strictQuery", false);
@@ -45,6 +47,7 @@ const server=app.listen(port, () => {
       console.log("mongodb connection error");
     });
 });
+
 
 
 //  socket.io code
