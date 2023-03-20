@@ -16,7 +16,7 @@ router.get("/",auth,(req, res) => {
 });
 
 
-router.get("/:uid", (req, res) => {
+router.get("/:uid",auth, (req, res) => {
   userConstructor
     .findOne({ _id: req.params.uid })
     .populate("services")

@@ -5,17 +5,24 @@ const auth=(req,res,next)=>{
   // {
   //   jwt:jwt_Token_Val
   // }
+  const uid=req.params.uid;
   const cookie=req.cookies;
-  const jwtTokenVal=cookie.jwt
+  const jwtTokenVal=cookie.jwtToken
   if(!jwtTokenVal){
     res.send("please sign in")
   }
   else{
     jwt.verify(jwtTokenVal,process.env.secretKey,(err,tokenData)=>{
       if(err){
-        res.send("please sign in")
+        res.send("auth failed");
       }
-      console.log("user is valid")
+      else{
+        let userIdInToken=tokenData.id
+        if(userIdInToken!==uid){
+          res.send("auth failed");
+        }
+      }
+      console.log("auth failed");
     })
     next();
   }
