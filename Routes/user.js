@@ -152,6 +152,7 @@ router.post("/chandra/signin", (req, res) => {
       if (bcrypt.compareSync(data.userPassword, result[0].password)) {
         
         let jwtToken=createToken(result[0]._id);
+        
         res.send({errors:[],result,jwtToken});
         // * user need to set this jwttoken in a cookie in format
           // {
