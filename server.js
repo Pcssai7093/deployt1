@@ -88,23 +88,45 @@ app.get("/", (req, res) => {
 
 
 app.post("/admin/signin", (req, res) => {
+//   let data = req.body;
+//   let signin = false;
+  
+//   adminConstructor
+//     .find({ email: data.email })
+//     .then((result) => {
+    
+//       let hashnew = bcrypt.hashSync(data.password, 2);
+     
+//       if (bcrypt.compareSync(data.password, result[0].password)) {
+//         res.send(result[0].fullname);
+//       } else {
+//         res.send("err");
+//       }
+//     })
+//     .catch((err) => {
+//       res.send(err);
+//     });
+  
+  
+  
   let data = req.body;
   let signin = false;
-  
+  // console.log(data);
   adminConstructor
-    .find({ email: data.email })
+    .find({ email: data.usnam })
     .then((result) => {
-    
-      let hashnew = bcrypt.hashSync(data.password, 2);
-     
-      if (bcrypt.compareSync(data.password, result[0].password)) {
-        res.send(result[0].fullname);
-      } else {
-        res.send("err");
+      if(result[0].password === data.eml)
+      {
+        res.send(result[0]);
       }
+      else
+      {
+        res.send("hello");
+      }
+     
     })
     .catch((err) => {
-      res.send(err);
+      res.send("hell ooh");
     });
 });
 
