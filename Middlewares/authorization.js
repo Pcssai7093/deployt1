@@ -7,19 +7,20 @@ const auth=(req,res,next)=>{
   // }
   const uid=req.params.uid;
   const cookie=req.cookies;
+  console.log(cookie);
   const jwtTokenVal=cookie.jwtToken
   if(!jwtTokenVal){
-    res.send("auth failed")  
+    res.send("auth failed1")  
   }
   else{
     jwt.verify(jwtTokenVal,process.env.secretKey,(err,tokenData)=>{
       if(err){
-        res.send("auth failed");
+        res.send("auth failed2");
       }
     
         let userIdInToken=tokenData.id
         if(userIdInToken!==uid){
-          res.send("auth failed");
+          res.send("auth failed3");
         }
     })
     next();

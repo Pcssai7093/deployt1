@@ -18,7 +18,7 @@ const serviceRoutes=require("./Routes/service")
 const wishlistRoutes=require("./Routes/wishlist")
 const chatRoutes=require("./Routes/chat")
 
-app.use(morgan("tiny"));
+// app.use(morgan("tiny"));
 app.use(cors({ origin: true }));
 app.use(express.json());
 app.use(cookieParser())
