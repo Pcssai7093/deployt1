@@ -133,9 +133,18 @@ router.post("/chandra/signin", (req, res) => {
 //       res.send(err);
 //     });
   
+  // response object form
+  // {
+  //   errors:[],
+  //   result:
+  //   token:
+  // }
   
   let data = req.body;
   let signin = false;
+  let responseObject={
+    errors:[]
+  }
   userConstructor
     .find({ email: data.userEmail })
     .then((result) => {
@@ -143,19 +152,21 @@ router.post("/chandra/signin", (req, res) => {
       if (bcrypt.compareSync(data.userPassword, result[0].password)) {
         
         let jwtToken=createToken(result[0]._id);
-        res.send({result,jwtToken});
+        res.send({errors:[],result,jwtToken});
         // * user need to set this jwttoken in a cookie in format
           // {
           //   jwt:jwt_Token_Val
           // }
       } else {
-        res.json("Password not correct")
-        return res;
+        responseObject.errors.push("Password is incorrect");
+        res.send(responseObject)
+        // return res;
       }
     })
     .catch((err) => {
-      res.json("Email not correct")
-        return res;
+      responseObject.errors.push("Email is not found");
+      res.send(responseObject)
+        // return res;
     });
 
 });
