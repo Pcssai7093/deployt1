@@ -52,9 +52,17 @@ router.get("/temp",(req,res)=>{
 })
 
 
-
-
-
+router.post("/forgot", (req,res) => {
+  const email = req.body.email;
+  userConstructor
+    .find({email: email})
+    .then((result) => {
+      res.send(result);
+  })
+    .catch((err) => {
+      res.send(err);
+  })
+})
 
 
 // ------------------------------------------------------
