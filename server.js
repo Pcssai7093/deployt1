@@ -6,6 +6,7 @@ const bodyparser = require("body-parser");
 const dotenv = require("dotenv");
 const mongoose = require("mongoose");
 const adminConstructor = module.require("./Schemas/admins");
+const userConstructor = module.require("./Schemas/users");
 const bcrypt = require("bcrypt");
 const app = express();
 const cors = require("cors");
@@ -111,6 +112,17 @@ app.post("/admin/signin", (req, res) => {
 //       res.send(err);
 //     });
   
+  app.get("/admin/users", (req,res) => {
+    
+    userConstructor
+    .find()
+    .then((result) => {
+      res.send(result);
+    })
+    .catch((err) => {
+      res.send(err);
+    })
+  })
   
   
   let data = req.body;
@@ -142,5 +154,5 @@ app.get("/csrf",csrfProtection,(req,res)=>{
 })
 
 app.post("/csrf",csrfProtection,(req,res)=>{
-  res.send("in post request")
+  res.send("in post req")
 })
