@@ -250,6 +250,7 @@ function serviceSortComparator(sort,order){
 
 app.post("/admin/service/filter",(req,res)=>{
   let data=req.body;
+  // console.log(data)
   serviceConstructor.find(
     {title:
      {
@@ -258,6 +259,7 @@ app.post("/admin/service/filter",(req,res)=>{
      }
     }
   )
+  .populate("seller")
   .sort(serviceSortComparator(data.sort,data.order))
   .then((result)=>{
     res.send(result)
