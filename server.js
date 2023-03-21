@@ -7,6 +7,7 @@ const dotenv = require("dotenv");
 const mongoose = require("mongoose");
 const adminConstructor = module.require("./Schemas/admins");
 const userConstructor = module.require("./Schemas/users");
+const serviceConstructor = module.require("./Schemas/services");
 const bcrypt = require("bcrypt");
 const app = express();
 const cors = require("cors");
@@ -31,7 +32,7 @@ app.use("/user",userRoutes  )
 app.use("/service",serviceRoutes)
 app.use("/wishlist",wishlistRoutes)
 app.use("/chat",chatRoutes)
-
+// app.use("/user/:uid",csrfProtection)
 
 
 dotenv.config("./.env");
@@ -91,6 +92,30 @@ app.get("/", (req, res) => {
   res.send(`server running at port ${port}`);
 });
 
+app.get("/admin/users", (req,res) => {
+    
+    userConstructor
+    .find()
+    .then((result) => {
+      res.send(result);
+    })
+    .catch((err) => {
+      res.send(err);
+    })
+  })
+
+
+app.get("/admin/services" , (req,res) => {
+  
+    serviceConstructor
+    .find()
+    .then((result) => {
+      res.send(result);
+    })
+    .catch((err) => {
+      res.send(err);
+    })
+  })
 
 app.post("/admin/signin", (req, res) => {
 //   let data = req.body;
