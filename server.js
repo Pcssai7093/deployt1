@@ -94,7 +94,7 @@ app.get("/", (req, res) => {
 app.post("/profile/:uid", (req,res) => {
     const id = req.params.uid;
     userConstructor
-    .findByIdAndUpdate(id,{fullname: req.body.fullname})
+    .findByIdAndUpdate(id,{fullname: req.body.fullname, $push :{skills: req.body.skills}})
     .then((result) => {
         res.send(result);
     })
