@@ -93,10 +93,11 @@ app.get("/", (req, res) => {
 
 app.post("/profile/:uid", (req,res) => {
     const id = req.params.uid;
+    
     userConstructor
-    .findByIdAndUpdate(id,{fullname: req.body.fullname, $push :{skills: req.body.skills}})
+    .findByIdAndUpdate(id,{fullname: req.body.fullname})
     .then((result) => {
-        res.send(result);
+        res.send(req.body.skills);
     })
     .catch((err) => {
       res.send(err);
