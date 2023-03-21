@@ -270,8 +270,9 @@ app.post("/admin/service/filter",(req,res)=>{
 })
 
 
-app.post("/posttest",(req,res)=>{
-  res.send(req)
+app.get("/test",async (req,res)=>{
+  let data=await serviceConstructor.find()
+  res.send(data)
 })
 
 //* route for filter and pagination
