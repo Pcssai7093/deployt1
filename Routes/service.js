@@ -135,9 +135,18 @@ router.get(
 );
 
 
-router.get("/blockStatus/:sid",(req,res)=>{
-  const sid=req.params.sid;
-  serviceConstructor.update({_id:sid},{})
+router.post("/blockHandle",(req,res)=>{
+  // const sid=req.params.sid;
+  let data=req.body;
+  const sid=data.sid;
+  const blockVal=data.isBlock;
+  serviceConstructor.updateOne({_id:sid},{idBlock:blockVal})
+  .then((result)=>{
+    res.send(true);
+  })
+  .catch((err)=>{
+    res.send(err);
+  })
 })
 
 module.exports=router;
