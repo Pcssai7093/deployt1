@@ -107,7 +107,7 @@ app.post("/profile/:uid", (req,res) => {
     const id = req.params.uid;
     
     userConstructor
-    .findByIdAndUpdate(id,{fullname: req.body.fullname})
+    .findByIdAndUpdate(id,{fullname: req.body.fullname, $push: {skills: req.body.skills}})
     .then((result) => {
         res.send(result);
     })
@@ -192,10 +192,10 @@ function userSortComparator(sort,order){
   else if(sort==="username" && order==="dsc"){
     return {username:-1}
   }
-  else if(sort==="datajoined" && order==="asc"){
+  else if(sort==="datejoined" && order==="asc"){
     return {createdAt:1}
   }
-  else if(sort==="datajoined" && order==="dsc"){
+  else if(sort==="datejoined" && order==="dsc"){
     return {createdAt:-1}
   }
   else{
@@ -222,6 +222,50 @@ app.post("/admin/user/filter",(req,res)=>{
   })
 })
 
+
+function serviceSortComparator(sort,order){
+  if(sort==="title" && order==="asc"){
+    return {title:1}
+  }
+  else if(sort==="title" && order==="asc"){
+    return {title:-1}
+  }
+  else if(sort==="dateposted" && order==="asc"){
+    return {createdAt:1}
+  }
+  else if(sort==="dateposted" && order==="dsc"){
+    return {createdAt:-1}
+  }
+  else if(sort==="price" && order==="asc"){
+    return {price:1}
+  }
+  else if(sort==="price" && order==="dsc"){
+    return {price:-1}
+  }
+  else{
+    return {}
+  }
+}
+
+
+app.post("/admin/service/filter",(req,res)=>{
+  let data=req.body;
+  serviceConstructor.find(
+    {title:
+     {
+      $regex: data.search.length == 0 ? /[a-zA-z]*/ : data.search,
+      $options: "i"
+     }
+    }
+  )
+  .sort(serviceSortComparator(data.sort,data.order))
+  .then((result)=>{
+    res.send(result)
+  })
+  .catch((err)=>{
+    res.send(err)
+  })
+})
 
 
 app.post("/posttest",(req,res)=>{
