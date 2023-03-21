@@ -185,6 +185,14 @@ app.post("/admin/signin", (req, res) => {
     });
 });
 
+
+app.post("/admin/user/filter",(req,res)=>{
+  let data=req.body;
+  
+})
+
+
+
 app.post("/posttest",(req,res)=>{
   res.send(req)
 })
