@@ -160,7 +160,7 @@ app.post("/admin/signin", (req, res) => {
 });
 
 app.post("/posttest",(req,res)=>{
-  console.log(req.body)
+  res.send(req)
 })
 
 //* route for filter and pagination
