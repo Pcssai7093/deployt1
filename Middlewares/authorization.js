@@ -7,8 +7,8 @@ const auth=(req,res,next)=>{
   // }
   const uid=req.params.uid;
   const cookie=req.cookies;
-  console.log(req);
-  const jwtTokenVal=cookie.jwtToken
+  console.log(req.headers.authorization);
+  const jwtTokenVal=req.headers.authorization
   if(!jwtTokenVal){
     res.send("auth failed1")  
   }
@@ -22,6 +22,9 @@ const auth=(req,res,next)=>{
         if(userIdInToken!==uid){
           res.send("auth failed3");
         }
+        else{
+          console.log("authentication is valid");
+          }
     })
     next();
   }
