@@ -3,8 +3,8 @@ const bcrypt = require("bcrypt");
 const userConstructor = module.require("../Schemas/users");
 const jwt=require("jsonwebtoken")
 const auth=require("../Middlewares/authorization")
-const csrf = require("csurf");
-let csrfProtection = csrf({ cookie: true });
+
+
 
 router.get("/",(req, res) => {
   userConstructor
@@ -19,7 +19,7 @@ router.get("/",(req, res) => {
 
 
 router.get("/:uid",auth, (req, res) => {
-  // console.log("csrf Token is "+req.csrfToken())
+  
   userConstructor
     .findOne({ _id: req.params.uid })
     .populate("services")
@@ -31,9 +31,7 @@ router.get("/:uid",auth, (req, res) => {
     });
 });
 
-router.post("/csrf",csrfProtection,(req,res)=>{
-  
-})
+
 router.post("/update", (req, res) => {
   // * user data update
   const data = req.body;
