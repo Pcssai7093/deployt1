@@ -271,7 +271,7 @@ app.post("/admin/service/filter",(req,res)=>{
 
 
 app.get("/test",async (req,res)=>{
-  let data=await serviceConstructor.find()
+  let data=await serviceConstructor.find().populate("seller")
   res.send(data)
 })
 
