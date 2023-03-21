@@ -183,7 +183,20 @@ router.post("/chandra/signin", (req, res) => {
 });
 
 
-
+router.post("/blockHandle",(req,res)=>{
+  // const sid=req.params.sid;
+  let data=req.body;
+  const sid=data.sid;
+  const blockVal=data.isBlock;
+  userConstructor.updateOne({_id:sid},{isBlock:blockVal})
+  .then((result)=>{
+    res.send(true);
+    
+  })
+  .catch((err)=>{
+    res.send(err);
+  })
+})
 
 module.exports=router;
 
