@@ -10,17 +10,17 @@ const auth=(req,res,next)=>{
   console.log(req.headers.authorization);
   const jwtTokenVal=req.headers.authorization
   if(!jwtTokenVal){
-    res.send("auth failed1")  
+    res.send("auth failed")  
   }
   else{
     jwt.verify(jwtTokenVal,process.env.secretKey,(err,tokenData)=>{
       if(err){
-        res.send("auth failed2");
+        res.send("auth failed");
       }
     
         let userIdInToken=tokenData.id
         if(userIdInToken!==uid){
-          res.send("auth failed3");
+          res.send("auth failed");
         }
         else{
           console.log("authentication is valid");
