@@ -12,6 +12,7 @@ const cors = require("cors");
 const socket=require("socket.io")
 const cookieParser = require("cookie-parser");
 const morgan=require("morgan")
+const csurf=require("csurf")
 
 const userRoutes=require("./Routes/user")
 const serviceRoutes=require("./Routes/service")
@@ -19,6 +20,8 @@ const wishlistRoutes=require("./Routes/wishlist")
 const chatRoutes=require("./Routes/chat")
 
 // app.use(morgan("tiny"));
+const csrf = require("csurf");
+let csrfProtection = csrf({ cookie: true });
 app.use(cookieParser())
 app.use(cors({ origin: true}));
 
@@ -133,3 +136,11 @@ app.post("/admin/signin", (req, res) => {
 
 
 //* route for filter and pagination
+
+app.get("/csrf",csrfProtection,(req,res)=>{
+ res.send("csrf token is"+req.csrfToken());
+})
+
+app.post("/csrf",csrfProtection,(req,res)=>{
+  res.send("in post request")
+})
