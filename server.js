@@ -185,8 +185,22 @@ app.post("/admin/signin", (req, res) => {
     });
 });
 
-function userSortComparator(){
-  
+function userSortComparator(sort,order){
+  if(sort==="username" && order==="asc"){
+    return {username:1}
+  }
+  else if(sort==="username" && order==="dsc"){
+    return {username:-1}
+  }
+  else if(sort==="datajoined" && order==="asc"){
+    return {createdAt:1}
+  }
+  else if(sort==="datajoined" && order==="dsc"){
+    return {createdAt:-1}
+  }
+  else{
+    return {}
+  }
 }
 
 app.post("/admin/user/filter",(req,res)=>{
@@ -194,12 +208,18 @@ app.post("/admin/user/filter",(req,res)=>{
   userConstructor.find(
     {username:
      {
-      $regex: data.search.length == 0 ? /[a-zA-z]*/ : searchString,
+      $regex: data.search.length == 0 ? /[a-zA-z]*/ : data.search,
       $options: "i"
      }
     }
   )
-  
+  .sort(userSortComparator(data.sort,data.order))
+  .then((result)=>{
+    res.send(result)
+  })
+  .catch((err)=>{
+    res.send(err)
+  })
 })
 
 
