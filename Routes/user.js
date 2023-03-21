@@ -18,8 +18,8 @@ router.get("/",(req, res) => {
 });
 
 
-router.get("/:uid",csrfProtection,auth, (req, res) => {
-  console.log("csrf Token is "+req.csrfToken())
+router.get("/:uid",auth, (req, res) => {
+  // console.log("csrf Token is "+req.csrfToken())
   userConstructor
     .findOne({ _id: req.params.uid })
     .populate("services")
