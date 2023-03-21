@@ -140,9 +140,10 @@ router.post("/blockHandle",(req,res)=>{
   let data=req.body;
   const sid=data.sid;
   const blockVal=data.isBlock;
-  serviceConstructor.updateOne({_id:sid},{idBlock:blockVal})
+  serviceConstructor.updateOne({_id:sid},{isBlock:blockVal})
   .then((result)=>{
-    res.send(true);
+    res.send(result);
+    
   })
   .catch((err)=>{
     res.send(err);

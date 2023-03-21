@@ -91,13 +91,25 @@ app.get("/", (req, res) => {
   res.send(`server running at port ${port}`);
 });
 
+app.get("/profile/:uid", (req,res) => {
+  const id = req.params.uid;
+  userConstructor
+  .find()
+  .then((result) => {
+      res.send(result);
+  })
+  .catch((err) => {
+      res.send(err);
+  })
+})
+
 app.post("/profile/:uid", (req,res) => {
     const id = req.params.uid;
     
     userConstructor
     .findByIdAndUpdate(id,{fullname: req.body.fullname})
     .then((result) => {
-        res.send(req.body.skills);
+        res.send(result);
     })
     .catch((err) => {
       res.send(err);
