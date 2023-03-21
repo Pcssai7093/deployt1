@@ -92,14 +92,14 @@ app.get("/", (req, res) => {
 });
 
 app.post("/profile/:uid", (req,res) => {
-    const id = req.params.id;
+    const id = req.params.uid;
     userConstructor
-    .findByIdAndUpdate(id,
-    {
-      fullname: req.body.username
-    })
+    .findByIdAndUpdate(id,{fullname: req.body.fullname})
     .then((result) => {
-        res.send(result)
+        res.send(result);
+    })
+    .catch((err) => {
+      res.send(err);
     })
 })
 
