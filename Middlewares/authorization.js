@@ -7,7 +7,7 @@ const auth=(req,res,next)=>{
   // }
   const uid=req.params.uid;
   const cookie=req.cookies;
-  console.log(cookie);
+  console.log(req);
   const jwtTokenVal=cookie.jwtToken
   if(!jwtTokenVal){
     res.send("auth failed1")  

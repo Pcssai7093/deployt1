@@ -20,7 +20,7 @@ const chatRoutes=require("./Routes/chat")
 
 // app.use(morgan("tiny"));
 app.use(cookieParser())
-app.use(cors({ creditials:true,origin: "http://localhost:3000"}));
+app.use(cors({ origin: true}));
 
 app.use(express.json());
 app.use("/user",userRoutes  )

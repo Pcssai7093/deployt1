@@ -48,9 +48,7 @@ router.post("/update", (req, res) => {
 
 
 router.get("/temp",auth,(req,res)=>{
-  res.set('Access-Control-Allow-Origin', '*')
-  res.set('Access-Control-Allow-Credentials', 'true')
-  res.send("test")
+  res.send(req)
 })
 
 
