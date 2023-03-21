@@ -135,5 +135,9 @@ router.get(
 );
 
 
+router.get("/blockStatus/:sid",(req,res)=>{
+  const sid=req.params.sid;
+  serviceConstructor.update({_id:sid},{})
+})
 
 module.exports=router;

@@ -121,6 +121,7 @@ app.get("/admin/services" , (req,res) => {
   
     serviceConstructor
     .find()
+    .populate("seller")
     .then((result) => {
       res.send(result);
     })
