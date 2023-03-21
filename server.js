@@ -94,7 +94,7 @@ app.get("/", (req, res) => {
 app.get("/profile/:uid", (req,res) => {
   const id = req.params.uid;
   userConstructor
-  .find()
+  .find({_id:id})
   .then((result) => {
       res.send(result);
   })
