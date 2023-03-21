@@ -4,7 +4,7 @@ const userConstructor = module.require("../Schemas/users");
 const jwt=require("jsonwebtoken")
 const auth=require("../Middlewares/authorization")
 
-router.get("/",auth,(req, res) => {
+router.get("/",(req, res) => {
   userConstructor
     .find()
     .then((result) => {
