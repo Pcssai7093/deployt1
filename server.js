@@ -185,9 +185,20 @@ app.post("/admin/signin", (req, res) => {
     });
 });
 
+function userSortComparator(){
+  
+}
 
 app.post("/admin/user/filter",(req,res)=>{
   let data=req.body;
+  userConstructor.find(
+    {username:
+     {
+      $regex: data.search.length == 0 ? /[a-zA-z]*/ : searchString,
+      $options: "i"
+     }
+    }
+  )
   
 })
 
