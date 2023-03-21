@@ -91,6 +91,18 @@ app.get("/", (req, res) => {
   res.send(`server running at port ${port}`);
 });
 
+app.post("/profile/:uid", (req,res) => {
+    const id = req.params.id;
+    userConstructor
+    .findByIdAndUpdate(id,
+    {
+      fullname: req.body.username
+    })
+    .then((result) => {
+        res.send(result)
+    })
+})
+
 app.get("/admin/users", (req,res) => {
     
     userConstructor

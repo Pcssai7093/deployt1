@@ -31,7 +31,6 @@ router.get("/:uid",auth, (req, res) => {
     });
 });
 
-
 router.post("/update", (req, res) => {
   // * user data update
   const data = req.body;
