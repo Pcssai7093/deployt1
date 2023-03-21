@@ -111,18 +111,7 @@ app.post("/admin/signin", (req, res) => {
 //     .catch((err) => {
 //       res.send(err);
 //     });
-  
-  app.get("/admin/users", (req,res) => {
-    
-    userConstructor
-    .find()
-    .then((result) => {
-      res.send(result);
-    })
-    .catch((err) => {
-      res.send(err);
-    })
-  })
+
   
   
   let data = req.body;
@@ -142,7 +131,7 @@ app.post("/admin/signin", (req, res) => {
      
     })
     .catch((err) => {
-      res.send("hell ooh");
+      res.send("hell");
     });
 });
 
