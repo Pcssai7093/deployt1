@@ -47,7 +47,7 @@ router.post("/update", (req, res) => {
 });
 
 
-router.get("/temp",(req,res)=>{
+router.get("/temp",auth,(req,res)=>{
   res.send("test")
 })
 
