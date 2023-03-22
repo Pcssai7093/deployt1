@@ -91,6 +91,10 @@ app.get("/", (req, res) => {
   res.send(`server running at port ${port}`);
 });
 
+app.get("/", (req,res) => {
+    
+})
+
 app.get("/profile/:uid", (req, res) => {
   const id = req.params.uid;
   userConstructor
