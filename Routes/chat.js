@@ -111,4 +111,14 @@ router.post("/conversation/add",(req,res)=>{
     
 });
 
+router.get("/countUnseen/:uid",(req,res)=>{
+  messageConstructor.find({seen:false}).count()
+  .then((result)=>{
+    res.send(result);
+  })
+  .catch((err)=>{
+    res.send(err)
+  })
+})
+
 module.exports=router;
