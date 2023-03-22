@@ -91,7 +91,10 @@ app.get("/", (req, res) => {
   res.send(`server running at port ${port}`);
 });
 
-app.get("/", (req,res) => {
+app.post("/forgotpass", (req,res) => {
+  
+  userConstructor
+  .find({email})
     
 })
 
