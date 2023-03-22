@@ -112,8 +112,8 @@ router.post("/conversation/add",(req,res)=>{
 });
 
 router.get("/countUnseen/:uid",async (req,res)=>{
-   
-  messageConstructor.find({seen:false}).count()
+  const uid=req.params.uid;
+  messageConstructor.find({to:uid,seen:false}).count()
   .then((result)=>{
     res.send({count:result})
   })
