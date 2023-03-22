@@ -111,14 +111,17 @@ router.post("/conversation/add",(req,res)=>{
     
 });
 
-router.get("/countUnseen/:uid",(req,res)=>{
+router.get("/countUnseen/:uid",async (req,res)=>{
+   
   messageConstructor.find({seen:false}).count()
   .then((result)=>{
-    res.send(result);
+    res.send({count:result})
   })
   .catch((err)=>{
     res.send(err)
   })
+  // console.log(count);
+  // res.send({count});
 })
 
 module.exports=router;
