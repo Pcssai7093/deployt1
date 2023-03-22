@@ -15,7 +15,7 @@ const socket=require("socket.io")
 const cookieParser = require("cookie-parser");
 const morgan=require("morgan")
 const multer = require("multer");
-
+const datauri = require('datauri')
 
 
 const userRoutes=require("./Routes/user")
