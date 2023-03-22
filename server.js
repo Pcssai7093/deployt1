@@ -15,7 +15,8 @@ const socket=require("socket.io")
 const cookieParser = require("cookie-parser");
 const morgan=require("morgan")
 const multer = require("multer");
-const datauri = require('datauri');
+const DatauriParser = require("datauri/parser");
+const parser = new DatauriParser();
 const path=require("path");
 
 
@@ -280,12 +281,12 @@ app.get("/test",async (req,res)=>{
 
 const storage = multer.memoryStorage();
 const multerUploads = multer({ storage }).single('image');
-const duri=new datauri();
-// app.post("/upload",multerUploads,(req,res)=>{
-//   console.log(req.file)
-//   // let imgUrl=duri.format(path.extname(req.file.originalname).toString(), req.file.buffer)
-//   // res.send(imgUrl);
-// })
+// const duri=Datauri();
+app.post("/upload",multerUploads,(req,res)=>{
+  console.log(req.file)
+  let imgUrl=parser.format(path.extname(req.file.originalname).toString(), req.file.buffer)
+  res.send(imgUrl);
+})
 //* route for filter and pagination
 
 
