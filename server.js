@@ -14,6 +14,8 @@ const cors = require("cors");
 const socket=require("socket.io")
 const cookieParser = require("cookie-parser");
 const morgan=require("morgan")
+const multer = require("multer");
+
 
 
 const userRoutes=require("./Routes/user")
@@ -107,7 +109,7 @@ app.post("/profile/:uid", (req,res) => {
     const id = req.params.uid;
     
     userConstructor
-    .findByIdAndUpdate(id,{fullname: req.body.fullname, $push: {skills: req.body.skills}})
+    .findByIdAndUpdate(id,{fullname: req.body.fullname, $push: {skills: req.body.skills}, about: req.body.about})
     .then((result) => {
         res.send(result);
     })
@@ -274,6 +276,24 @@ app.get("/test",async (req,res)=>{
   let data=await serviceConstructor.find().populate("seller")
   res.send(data)
 })
+const multerStorage = multer.diskStorage({
+  destination: "public",
+  filename: (req, file, cb) => {
+    const ext = file.mimetype.split("/")[1];
+    cb(null, `image.${ext}`);
+  },
+});
 
+const upload = multer({ storage: multerStorage });
+
+app.post("/upload",upload.single("image"),(req,res)=>{
+  res.send(req.body);
+})
 //* route for filter and pagination
+
+
+
+
+
+
 
