@@ -7,7 +7,7 @@ const auth=(req,res,next)=>{
   // }
   const uid=req.params.uid;
   const cookie=req.cookies;
-  console.log(req.headers.authorization);
+  // console.log(req.headers.authorization);
   const jwtTokenVal=req.headers.authorization
   if(!jwtTokenVal){
     res.send("auth failed")  
@@ -23,7 +23,7 @@ const auth=(req,res,next)=>{
           res.send("auth failed");
         }
         else{
-          console.log("authentication is valid");
+          // console.log("authentication is valid");
           }
     })
     next();
