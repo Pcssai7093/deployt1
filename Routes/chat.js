@@ -125,11 +125,13 @@ router.get("/countUnseen/:uid",async (req,res)=>{
 })
 
 
-router.get("/updateSeen/:fromId/:toUid",(req,res)=>{
-  const from=req.params.fromId;
-  const to=req.params.to;
-  messageConstructor.updateMany({from,to},{seen:true})
+router.get("/updateSeen/:fromUId/:toUid",(req,res)=>{
+  const from=req.params.fromUId;
+  const to=req.params.toUid;
+  console.log(from,to);
+  messageConstructor.updateMany({from:from,to:to},{seen:true})
   .then((result)=>{
+    console.log(result);
     res.send(result);
   })
   .catch((err)=>{
