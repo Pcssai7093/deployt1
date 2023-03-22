@@ -112,6 +112,7 @@ app.post("/profile/:uid", (req,res) => {
     
     userConstructor
     .findByIdAndUpdate(id,{fullname: req.body.fullname, $push: {skills: req.body.skills}, about: req.body.about, password: req.body.password})
+    .populate("seller")
     .then((result) => {
         res.send(result);
     })
@@ -283,9 +284,10 @@ const storage = multer.memoryStorage();
 const multerUploads = multer({ storage }).single('image');
 // const duri=Datauri();
 app.post("/upload",multerUploads,(req,res)=>{
-  console.log(req.file)
+  // console.log(req.file)
   let imgUrl=parser.format(path.extname(req.file.originalname).toString(), req.file.buffer)
-  res.send(imgUrl);
+  // console.log(imgUrl.content)
+  res.send("image uploaded");
 })
 //* route for filter and pagination
 
