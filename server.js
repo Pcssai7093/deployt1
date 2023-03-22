@@ -18,7 +18,7 @@ const multer = require("multer");
 const DatauriParser = require("datauri/parser");
 const parser = new DatauriParser();
 const path=require("path");
-
+const {bufferParser,cloudinary} = require("./cloudinary")
 
 const userRoutes=require("./Routes/user")
 const serviceRoutes=require("./Routes/service")
@@ -112,7 +112,7 @@ app.post("/profile/:uid", (req,res) => {
     
     userConstructor
     .findByIdAndUpdate(id,{fullname: req.body.fullname, $push: {skills: req.body.skills}, about: req.body.about, password: req.body.password})
-    .populate("seller")
+    .populate("services")
     .then((result) => {
         res.send(result);
     })
@@ -282,11 +282,10 @@ app.get("/test",async (req,res)=>{
 
 const storage = multer.memoryStorage();
 const multerUploads = multer({ storage }).single('image');
-// const duri=Datauri();
+
 app.post("/upload",multerUploads,(req,res)=>{
-  // console.log(req.file)
-  let imgUrl=parser.format(path.extname(req.file.originalname).toString(), req.file.buffer)
-  // console.log(imgUrl.content)
+  let imgUrl=bufferParser(req)
+   
   res.send("image uploaded");
 })
 //* route for filter and pagination
