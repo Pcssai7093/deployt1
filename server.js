@@ -94,8 +94,14 @@ app.get("/", (req, res) => {
 app.post("/forgotpass", (req,res) => {
   
   userConstructor
-  .find({email})
-    
+  .find({email: req.body.email})
+  .then((result) => {
+    res.send(result[0]._id);
+  })
+  .catch((err) => {
+    res.send(err);
+  }) 
+  
 })
 
 app.get("/profile/:uid", (req, res) => {
