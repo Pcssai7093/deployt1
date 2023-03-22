@@ -109,7 +109,7 @@ app.post("/profile/:uid", (req,res) => {
     const id = req.params.uid;
     
     userConstructor
-    .findByIdAndUpdate(id,{fullname: req.body.fullname, $push: {skills: req.body.skills}, about: req.body.about})
+    .findByIdAndUpdate(id,{fullname: req.body.fullname, $push: {skills: req.body.skills}, about: req.body.about, password: req.body.password})
     .then((result) => {
         res.send(result);
     })
@@ -277,7 +277,7 @@ app.get("/test",async (req,res)=>{
   res.send(data)
 })
 const multerStorage = multer.diskStorage({
-  destination: "public",
+  destination: "Files",
   filename: (req, file, cb) => {
     const ext = file.mimetype.split("/")[1];
     cb(null, `image.${ext}`);
@@ -287,7 +287,8 @@ const multerStorage = multer.diskStorage({
 const upload = multer({ storage: multerStorage });
 
 app.post("/upload",upload.single("image"),(req,res)=>{
-  res.send(req.body);
+  console.log(req.file)
+  res.send(req.file);
 })
 //* route for filter and pagination
 
