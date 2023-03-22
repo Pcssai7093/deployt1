@@ -96,7 +96,7 @@ app.post("/forgotpass", (req,res) => {
   userConstructor
   .find({email: req.body.email})
   .then((result) => {
-    res.send(result[0]._id);
+    res.send(result);
   })
   .catch((err) => {
     res.send(err);
