@@ -124,4 +124,17 @@ router.get("/countUnseen/:uid",async (req,res)=>{
   // res.send({count});
 })
 
+
+router.get("/updateSeen/:fromId/:toUid",(req,res)=>{
+  const from=req.params.fromId;
+  const to=req.params.to;
+  messageConstructor.updateMany({from,to},{seen:true})
+  .then((result)=>{
+    res.send(result);
+  })
+  .catch((err)=>{
+    res.send(err);
+  })
+})
+
 module.exports=router;
