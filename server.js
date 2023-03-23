@@ -115,7 +115,7 @@ app.post("/forgotpass", (req,res) => {
   
 })
 
-app.get("/profile/:pid", (req,res) => {
+app.get("/profilee/:pid", (req,res) => {
   const id = req.params.pid;
   serviceConstructor
   .find({_id:id})
