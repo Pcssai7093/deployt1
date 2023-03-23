@@ -110,7 +110,7 @@ app.get("/profile/:pid", (req,res) => {
   .find({_id:id})
   .populate("seller")
   .then((result) => {
-      res.send(result);
+      res.send(result[0].seller);
   })
   .catch((err) => {
       res.send(err);
