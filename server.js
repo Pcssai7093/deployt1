@@ -284,14 +284,16 @@ app.get("/test", async (req, res) => {
 });
 
 const storage = multer.memoryStorage();
-const multerUploads = multer({ storage }).single("image");
+const multerUploads = multer({ storage }).single("images");
 
 app.post("/upload", multerUploads, (req, res) => {
-  let imgData = bufferParser(req);
-  cloudinary.uploader
-    .upload(imgData)
-    .then((response) => {
-      res.send(response.secure_url);
+  console.log(req.files);
+  res.send("hello");
+  // let imgData = bufferParser(req);
+  // cloudinary.uploader
+  //   .upload(imgData)
+  //   .then((response) => {
+  //     res.send(response.secure_url);
 
       //      response format
       // {
@@ -316,10 +318,10 @@ app.post("/upload", multerUploads, (req, res) => {
       //   folder: "",
       //   api_key: "812339449319741",
       // }
-    })
-    .catch((err) => {
-      res.send(err);
-    });
+    // })
+    // .catch((err) => {
+    //   res.send(err);
+    // });
   // res.send("image uploaded");
 });
 //* route for filter and pagination
