@@ -121,7 +121,7 @@ app.get("/profile/:pid", (req,res) => {
   .find({_id:id})
   .populate("seller")
   .then((result) => {
-      res.send(result[0].seller);
+      res.send(result);
   })
   .catch((err) => {
       res.send(err);
