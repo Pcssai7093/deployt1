@@ -104,6 +104,19 @@ app.post("/forgotpass", (req,res) => {
   
 })
 
+app.get("/profile/:pid", (req,res) => {
+  const id = req.params.pid;
+  serviceConstructor
+  .find({_id:id})
+  .populate("seller")
+  .then((result) => {
+      res.send(result);
+  })
+  .catch((err) => {
+      res.send(err);
+  })
+})
+
 app.get("/profile/:uid", (req, res) => {
   const id = req.params.uid;
   userConstructor
