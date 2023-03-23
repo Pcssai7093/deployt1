@@ -284,11 +284,12 @@ app.get("/test", async (req, res) => {
 });
 
 const storage = multer.memoryStorage();
-const multerUploads = multer({ storage }).single("images");
+const multerUploads = multer({ storage }).array("images",2);
 
 app.post("/upload", multerUploads, (req, res) => {
-  console.log(req.files);
+  console.log(req.body,req.files);
   res.send("hello");
+  
   // let imgData = bufferParser(req);
   // cloudinary.uploader
   //   .upload(imgData)
