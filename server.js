@@ -8,6 +8,7 @@ const mongoose = require("mongoose");
 const adminConstructor = module.require("./Schemas/admins");
 const userConstructor = module.require("./Schemas/users");
 const serviceConstructor = module.require("./Schemas/services");
+const messageConstructor=module.require("./Schemas/message");
 const bcrypt = require("bcrypt");
 const app = express();
 const cors = require("cors");
@@ -83,6 +84,8 @@ io.on("connection", (clientSocket) => {
       clientSocket
         .to(toSocketId)
         .emit("receiveMessage", fromUserId, toUserId, Message);
+      
+      
     }
   });
 });
