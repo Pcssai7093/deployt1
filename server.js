@@ -84,7 +84,15 @@ io.on("connection", (clientSocket) => {
       clientSocket
         .to(toSocketId)
         .emit("receiveMessage", fromUserId, toUserId, Message);
-      
+        
+      const messageId=Message._id;
+      messageConstructor.updateOne({_id:messageId},{seen:true})
+      .then((result)=>{
+        
+      })
+      .catch((err)=>{
+        console.log("err");
+      })
       
     }
   });
