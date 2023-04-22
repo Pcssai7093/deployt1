@@ -127,7 +127,7 @@ app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerSpec));
  *              description: To test get method
  */
 app.get("/", (req, res) => {
-  res.send(`server running at port ${port}  hii :)`);
+  res.send(`server running at port ${port}  hii :) after deployment`);
 });
 
 app.post("/resetpassword/:id", (req, res) => {
