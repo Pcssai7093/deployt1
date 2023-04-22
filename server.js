@@ -10,17 +10,11 @@ const userConstructor = module.require("./Schemas/users");
 const serviceConstructor = module.require("./Schemas/services");
 const messageConstructor = module.require("./Schemas/message");
 const Contact = module.require("./Schemas/query");
-const bcrypt = require("bcrypt");
 const app = express();
 const cors = require("cors");
 const socket = require("socket.io");
 const cookieParser = require("cookie-parser");
-const multer = require("multer");
 const DatauriParser = require("datauri/parser");
-const parser = new DatauriParser();
-const fs = require("fs");
-const path = require("path");
-const { bufferParser, cloudinary, multerUploads } = require("./cloudinary");
 
 const swaggerUi = require("swagger-ui-express");
 const swaggerJSDoc = require("swagger-jsdoc");
@@ -38,7 +32,6 @@ app.use("/user", userRoutes);
 app.use("/service", serviceRoutes);
 app.use("/wishlist", wishlistRoutes);
 app.use("/chat", chatRoutes);
-// app.use("/user/:uid",csrfProtection)
 
 dotenv.config("./.env");
 mongoose.set("strictQuery", false);
