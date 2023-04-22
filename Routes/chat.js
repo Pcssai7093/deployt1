@@ -7,7 +7,57 @@ router.get("/temp",(req,res)=>{
   res.send("chat temp");
 });
 
-// retrieving conversations for a user
+/**
+ * @swagger
+ *  components:
+ *      schema:
+ *          Message:
+ *            type: object
+ *            properties:
+ *                users:
+ *                    type: object
+ *                messages:
+ *                    type: object
+ *                
+ */
+
+/**
+ * @swagger
+ *  components:
+ *      schema:
+ *          Conversation:
+ *            type: object
+ *            properties:
+ *                users:
+ *                    type: object
+ *                messages:
+ *                    type: object
+ *                
+ */
+
+/**
+ * @swagger
+ * /chat/conversation/{uid}:
+ *   get: 
+ *        summary: To get the chat between the user and all other persons
+ *        description: This API gets the chat between the user and all other persons
+ *        parameters:
+ *            - in: path
+ *              name: uid
+ *              required: true
+ *              description: string id required
+ *              schema:
+ *                type: string
+ *        responses:
+ *          200:
+ *              description: This api is used fetch the chat between the user and all other persons from mongodb
+ *              content:
+ *                  application/json:
+ *                      schema:
+ *                          type: array
+ *                          items:
+ *                              $ref: '#components/schema/Conversation'
+ */
   router.get("/conversation/:uid",(req,res)=>{
   let uid=req.params.uid
   
@@ -24,7 +74,30 @@ router.get("/temp",(req,res)=>{
 });
 
 
-// retrieving messages for a conversation
+/**
+ * @swagger
+ * /chat/message/{conversationId}:
+ *   get: 
+ *        summary: To get the chat between two people
+ *        description: This API gets the chat between two people
+ *        parameters:
+ *            - in: path
+ *              name: conversationId
+ *              required: true
+ *              description: string id required
+ *              schema:
+ *                type: string
+ *        responses:
+ *          200:
+ *              description: This api is used fetch the chat between two people from mongodb
+ *              content:
+ *                  application/json:
+ *                      schema:
+ *                          type: array
+ *                          items:
+ *                              $ref: '#components/schema/Conversation'
+ */
+
 router.get("/message/:conversationId",(req,res)=>{
   let cid=req.params.conversationId
   conversationConstructor.find({_id:cid})
@@ -39,6 +112,45 @@ router.get("/message/:conversationId",(req,res)=>{
 
 
 // adding messages in a conversation
+
+/**
+ * @swagger
+ * /chat/message/add:
+ *  post:
+ *      summary: To add a message between two users
+ *      description: To add a message between two users
+ *      requestBody:
+ *          required: true
+ *          content:
+ *              application/json:
+ *                  schema:
+ *                      type: object
+ *                      properties:
+ *                          from: 
+ *                              type: string
+ *                          to:
+ *                              type: string
+ *                          message:
+ *                              type: string
+ *      responses:
+ *          200:
+ *              description: To add a message between two users
+ *              content:
+ *                  application/json:
+ *                      schema:
+ *                          type: object
+ *                          properties:
+ *                              message:
+ *                                  type: string
+ *                              from:
+ *                                  type: string
+ *                              to:
+ *                                  type: string
+ *                              seen:
+ *                                  type: boolean
+ *                          
+ */
+
 router.post("/message/add",(req,res)=>{
   // no conversation id is needed
 //   body contains two user id's and messages
@@ -65,6 +177,38 @@ router.post("/message/add",(req,res)=>{
 
 
 // adding adding conversation for users
+
+/**
+ * @swagger
+ * /chat/conversation/add:
+ *  post:
+ *      summary: To add a message between two users
+ *      description: To add a message between two users
+ *      requestBody:
+ *          required: true
+ *          content:
+ *              application/json:
+ *                  schema:
+ *                      type: object
+ *                      properties:
+ *                          user1: 
+ *                              type: string
+ *                          user2:
+ *                              type: string
+ *      responses:
+ *          200:
+ *              description: To add a message between two users
+ *              content:
+ *                  application/json:
+ *                      schema:
+ *                          type: object
+ *                          properties:
+ *                              users:
+ *                                  type: array
+ *                              messages:
+ *                                  type: array
+ *                          
+ */
 
 router.post("/conversation/add",(req,res)=>{
   // res.send("hello");
@@ -111,6 +255,32 @@ router.post("/conversation/add",(req,res)=>{
     
 });
 
+/**
+ * @swagger
+ * /chat/countUnseen/{uid}:
+ *   get: 
+ *        summary: To get the number of unseen messages
+ *        description: This API gets the number of unseen messages
+ *        parameters:
+ *            - in: path
+ *              name: uid
+ *              required: true
+ *              description: string id required
+ *              schema:
+ *                type: string
+ *        responses:
+ *          200:
+ *              description: This api is used fetch the number of unseen messages from mongodb
+ *              content:
+ *                  application/json:
+ *                      schema:
+ *                          type: object
+ *                          properties:
+ *                              count:
+ *                                  type: number
+ */
+
+
 router.get("/countUnseen/:uid",async (req,res)=>{
   const uid=req.params.uid;
   messageConstructor.find({to:uid,seen:false}).count()
@@ -123,6 +293,45 @@ router.get("/countUnseen/:uid",async (req,res)=>{
   // console.log(count);
   // res.send({count});
 })
+
+/**
+ * @swagger
+ * /chat/updateSeen/{fromUId}/{toUid}:
+ *   get: 
+ *        summary: To get the number of unseen messages
+ *        description: This API gets the number of unseen messages
+ *        parameters:
+ *            - in: path
+ *              name: fromUId
+ *              required: true
+ *              description: string id required
+ *              schema:
+ *                type: string
+ *            - in: path
+ *              name: toUid
+ *              required: true
+ *              description: string id required
+ *              schema:
+ *                type: string
+ *        responses:
+ *          200:
+ *              description: This api is used fetch the number of unseen messages from mongodb
+ *              content:
+ *                  application/json:
+ *                      schema:
+ *                          type: object
+ *                          properties:
+ *                              acknowledged:
+ *                                  type: boolean
+ *                              modifiedCount:
+ *                                  type: number
+ *                              upsertedId:
+ *                                  type: string
+ *                              upsertedCount:
+ *                                  type: number
+ *                              matchedCount:
+ *                                  type: number
+ */                                 
 
 
 router.get("/updateSeen/:fromUId/:toUid",(req,res)=>{

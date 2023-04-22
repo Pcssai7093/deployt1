@@ -1,7 +1,45 @@
 const router=require("express").Router()
 const serviceConstructor = module.require("../Schemas/services");
 const userConstructor = module.require("../Schemas/users");
+const { bufferParser, cloudinary,multerUploads } = require("../cloudinary");
+/**
+ * @swagger
+ *  components:
+ *      schema:
+ *          Service:
+ *            type: object
+ *            properties:
+ *                title: 
+ *                    type: string
+ *                description:
+ *                    type: string
+ *                price:
+ *                    type: number
+ *                category:
+ *                    type: string
+ *                seller:
+ *                    type: array
+ *                isBlock:
+ *                    type: boolean
+ *                    
+ */
 
+/**
+ * @swagger
+ * /service:
+ *  get:
+ *      summary: To get all the services 
+ *      description: This api is used fetch all the services 
+ *      responses:
+ *          200:
+ *              description: This api is used fetch all the services 
+ *              content:
+ *                  application/json:
+ *                      schema:
+ *                          type: array
+ *                          items:
+ *                              $ref: '#components/schema/Service'
+ */
 router.get("/", (req, res) => {
   
   serviceConstructor
@@ -15,29 +53,29 @@ router.get("/", (req, res) => {
     });
 });
 
-
-router.post("/add", (req, res) => {
-  let data = req.body;
-  let sellerId = req.body.seller;
-  console.log(sellerId);
-  serviceConstructor(data)
-    .save()
-    .then((result) => {
-      // * syntax to update
-      const update = { $push: { services: [result._id] } };
-      userConstructor
-        .update({ _id: sellerId }, update)
-        .then((result2) => {
-          res.send(result2);
-        })
-        .catch((err) => {
-          res.send(err);
-        });
-    })
-    .catch((err) => {
-      res.send(err);
-    });
-});
+/**
+ * @swagger
+ * /service/{sid}:
+ *  get:
+ *      summary: To get all the service details along with the seller details
+ *      description: This api is used fetch all the service details along with the seller details
+ *      parameters:
+ *            - in: path
+ *              name: sid
+ *              required: true
+ *              description: string id required
+ *              schema:
+ *                type: string
+ *      responses:
+ *          200:
+ *              description: This api is used fetch all the service details along with the seller details 
+ *              content:
+ *                  application/json:
+ *                      schema:
+ *                          type: array
+ *                          items:
+ *                            $ref: '#components/schema/Service'
+ */
 
 router.get("/:sid", (req, res) => {
   let serviceId = req.params.sid;
@@ -52,10 +90,14 @@ router.get("/:sid", (req, res) => {
     });
 });
 
-router.get("/user/:uid",(req,res)=>{
+// router.get("/user/:uid",(req,res)=>{
   
-});
+// });
 
+/**
+ * 
+ * /service/{search}/{sortCategory}/{category}/{price}/{limit}/{skip}
+ */
 router.get(
   "/:search/:sortCategory/:category/:price/:limit/:skip",
   (req, res) => {
@@ -134,7 +176,31 @@ router.get(
   }
 );
 
-
+/**
+ * @swagger
+ * /service/blockHandle:
+ *  post:
+ *      summary: To block/unblock a service
+ *      description: To block/unblock a service
+ *      requestBody:
+ *          required: true
+ *          content:
+ *              application/json:
+ *                  schema:
+ *                      type: object
+ *                      properties:
+ *                          sid: 
+ *                              type: string
+ *                          isBlock:
+ *                              type: boolean
+ *      responses:
+ *          200:
+ *              description: To block/unblock a service
+ *              content:
+ *                  application/json:
+ *                      BlockStatus:
+ *                          type: boolean
+ */
 router.post("/blockHandle",(req,res)=>{
   // const sid=req.params.sid;
   let data=req.body;
@@ -149,6 +215,51 @@ router.post("/blockHandle",(req,res)=>{
     res.send(err);
   })
 })
+
+
+router.post("/add",multerUploads, async (req, res) => {
+  let data = req.body;
+  let imageData=bufferParser(req);
+  // console.log(data);
+  // console.log(imageData.length);
+  
+  // this array has urls of the cloud image
+  let productImages=[]
+  for(let i =0;i<2;i++){
+    await cloudinary.uploader.upload(imageData[i])
+    .then((response)=>{
+      // console.log(response.secure_url);
+      productImages.push(response.secure_url);
+    })
+    .catch((err)=>{
+      res.send(false)
+    })
+  }
+  console.log(productImages);
+  // res.send(true);
+  
+  
+  
+  let sellerId = req.body.seller;
+  console.log(sellerId);
+  serviceConstructor({...data,productImages})
+    .save()
+    .then((result) => {
+      // * syntax to update
+      const update = { $push: { services: [result._id] } };
+      userConstructor
+        .update({ _id: sellerId }, update)
+        .then((result2) => {
+          res.send(true);
+        })
+        .catch((err) => {
+          res.send(false);
+        });
+    })
+    .catch((err) => {
+      res.send(false);
+    });
+});
 
 
 

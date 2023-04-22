@@ -4,8 +4,54 @@ const userConstructor = module.require("../Schemas/users");
 const jwt=require("jsonwebtoken")
 const auth=require("../Middlewares/authorization")
 
+/**
+ * @swagger
+ *  components:
+ *      schema:
+ *          User:
+ *            type: object
+ *            properties:
+ *                fullname:
+ *                    type: string
+ *                username:
+ *                    type: string
+ *                email:
+ *                    type: string
+ *                password:
+ *                    type: string
+ *                isSeller:
+ *                    type: boolean
+ *                isBlock:
+ *                    type: boolean
+ *                skills:
+ *                    type: array
+ *                services:
+ *                    type: array
+ *                wishlist:
+ *                    type: array
+ *                conversations:
+ *                    type: array
+ *                about:
+ *                    type: string
+ * 
+ */
 
-
+/**
+ * @swagger
+ * /user:
+ *  get:
+ *      summary: To get all the users 
+ *      description: This api is used fetch all the users 
+ *      responses:
+ *          200:
+ *              description: This api is used fetch all the users 
+ *              content:
+ *                  application/json:
+ *                      schema:
+ *                          type: array
+ *                          items:
+ *                            $ref: '#components/schema/User'
+ */
 router.get("/",(req, res) => {
   userConstructor
     .find()
@@ -17,6 +63,29 @@ router.get("/",(req, res) => {
     });
 });
 
+/**
+ * @swagger
+ * /user/{uid}:
+ *  get:
+ *      summary: To get all the user details along with the services he posted
+ *      description: This api is used fetch all the user details along with the services he posted
+ *      parameters:
+ *            - in: path
+ *              name: uid
+ *              required: true
+ *              description: string id required
+ *              schema:
+ *                type: string
+ *      responses:
+ *          200:
+ *              description: This api is used fetch all the user details along with the services he posted 
+ *              content:
+ *                  application/json:
+ *                      schema:
+ *                          type: array
+ *                          items:
+ *                            $ref: '#components/schema/User'
+ */
 
 router.get("/:uid",auth, (req, res) => {
   
@@ -53,6 +122,31 @@ router.get("/temp",auth,(req,res)=>{
   res.send(req)
 })
 
+/**
+ * @swagger
+ * /user/forgot:
+ *  post:
+ *      summary: To return a particular user based on his email
+ *      description: To return a particular user based on his email
+ *      requestBody:
+ *          required: true
+ *          content:
+ *              application/json:
+ *                  schema:
+ *                      type: object
+ *                      properties:
+ *                          email: 
+ *                              type: string
+ *      responses:
+ *          200:
+ *              description: To return a particular user based on his email
+ *              content:
+ *                  application/json:
+ *                      schema:
+ *                          type: array
+ *                          items:
+ *                              $ref: '#components/schema/User'
+ */
 
 router.post("/forgot", (req,res) => {
   const email = req.body.email;
@@ -69,6 +163,37 @@ router.post("/forgot", (req,res) => {
 
 // ------------------------------------------------------
 //  chandra's code
+/**
+ * @swagger
+ * /user/chandra/signup:
+ *  post:
+ *      summary: To add a user to the database
+ *      description: To add a user to the database
+ *      requestBody:
+ *          required: true
+ *          content:
+ *              application/json:
+ *                  schema:
+ *                      type: object
+ *                      properties:
+ *                          username:
+ *                              type: string
+ *                          fullname:
+ *                              type: string
+ *                          email: 
+ *                              type: string
+ *                          password:
+ *                              type: string
+ *      responses:
+ *          200:
+ *              description: To add a user to the database
+ *              content:
+ *                  application/json:
+ *                      schema:
+ *                          type: array
+ *                          items:
+ *                              $ref: '#components/schema/User'
+ */
 
 router.post("/chandra/signup", (req, res) => {
 //   let data = req.body;
@@ -107,6 +232,29 @@ router.post("/chandra/signup", (req, res) => {
   
 });
 
+router.get("/profile/:uid", (req, res) => {
+  userConstructor
+    .findOne({ _id: req.params.uid })
+    .populate("services")
+    .then((result) => {
+      res.send(result);
+    })
+    .catch((err) => {
+      res.send(err);
+    });
+});
+
+router.post("/profile/update/:uid", (req, res) => {
+  const data=req.body;
+  userConstructor
+    .updateOne({ _id: req.params.uid },data)
+    .then((result) => {
+      res.send(true);
+    })
+    .catch((err) => {
+      res.send(false);
+    });
+});
 
 function createToken(id){
   let payload={
@@ -116,8 +264,33 @@ function createToken(id){
   return jwt.sign(payload,process.env.secretKey);
 }
 
-
-
+/**
+ * @swagger
+ * /user/chandra/signin:
+ *  post:
+ *      summary: To allow a user to access our services in he is in our database
+ *      description: To allow a user to access our services in he is in our database
+ *      requestBody:
+ *          required: true
+ *          content:
+ *              application/json:
+ *                  schema:
+ *                      type: object
+ *                      properties:
+ *                          userEmail: 
+ *                              type: string
+ *                          userPassword:
+ *                              type: string
+ *      responses:
+ *          200:
+ *              description: To allow a user to access our services in he is in our database
+ *              content:
+ *                  application/json:
+ *                      schema:
+ *                          type: array
+ *                          items:
+ *                              $ref: '#components/schema/User'
+ */
 
 router.post("/chandra/signin", (req, res) => {
 //   let data = req.body;
@@ -182,6 +355,31 @@ router.post("/chandra/signin", (req, res) => {
 
 });
 
+/**
+ * @swagger
+ * /user/blockHandle:
+ *  post:
+ *      summary: To block/unblock a user 
+ *      description: To block/unblock a user
+ *      requestBody:
+ *          required: true
+ *          content:
+ *              application/json:
+ *                  schema:
+ *                      type: object
+ *                      properties:
+ *                          sid: 
+ *                              type: string
+ *                          isBlock:
+ *                              type: boolean
+ *      responses:
+ *          200:
+ *              description: To block/unblock a user
+ *              content:
+ *                  application/json:
+ *                      schema:
+ *                          type: boolean
+ */
 
 router.post("/blockHandle",(req,res)=>{
   // const sid=req.params.sid;
