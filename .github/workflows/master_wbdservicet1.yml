@@ -33,9 +33,22 @@ jobs:
           tags: index.docker.io/${{ secrets.AzureAppService_ContainerUsername_4593d894059b45f1a3dbd9c8c1106465 }}/wbd1:${{ github.sha }}
           file: ./Dockerfile
 
-  deploy:
+  test:
     runs-on: ubuntu-latest
     needs: build
+
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Run tests
+        run: npm test
+
+  deploy:
+    runs-on: ubuntu-latest
+    needs: [build, test]
     environment:
       name: "production"
       url: ${{ steps.deploy-to-webapp.outputs.webapp-url }}
