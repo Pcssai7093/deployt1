@@ -597,3 +597,6 @@ app.get("/test", async (req, res) => {
   let data = await serviceConstructor.find().populate("seller");
   res.send(data);
 });
+
+
+module.exports = app;
