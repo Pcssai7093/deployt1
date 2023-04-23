@@ -10,6 +10,11 @@ app.use("/service", serviceroutes);
 
 
 
+
+
+
+
+
 const chai = require('chai')
 const expect = require('chai').expect;
 
@@ -169,10 +174,9 @@ describe('GET /', () => {
 
 
 
-
-
-
-
+// after(async () => {
+//   await app.close(); // close the server connection
+// });
 
 
 
