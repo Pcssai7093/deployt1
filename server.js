@@ -1,6 +1,3 @@
-// an user id
-// 63c16c3ad393089e5d87fea4
-
 const express = require("express");
 const bodyparser = require("body-parser");
 const dotenv = require("dotenv");
@@ -18,6 +15,8 @@ const DatauriParser = require("datauri/parser");
 
 const swaggerUi = require("swagger-ui-express");
 const swaggerJSDoc = require("swagger-jsdoc");
+
+const redisclient = require("./redis");
 
 const userRoutes = require("./Routes/user");
 const serviceRoutes = require("./Routes/service");
@@ -126,6 +125,7 @@ app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerSpec));
  *        200:
  *              description: To test get method
  */
+
 app.get("/", (req, res) => {
   res.send(`server running at port ${port}  hii :) after deployment`);
 });
@@ -240,14 +240,40 @@ app.post("/insert", async (req, res) => {
  */
 
 app.get("/admin/users", (req, res) => {
-  userConstructor
-    .find()
-    .then((result) => {
-      res.send(result);
+  redisclient
+    .get("users")
+    .then((data) => {
+      // console.log(data);
+      if (data != null) {
+        console.log("cached");
+        res.send(data);
+      } else {
+        console.log("not cached");
+        userConstructor
+          .find()
+          .then((result) => {
+            redisclient.set("users", JSON.stringify(result)).then((r2) => {
+              redisclient.expire("users", 30).then((r3) => {
+                res.send(result);
+              });
+            });
+          })
+          .catch((err) => {
+            res.send(err);
+          });
+      }
     })
     .catch((err) => {
       res.send(err);
     });
+  // userConstructor
+  //   .find()
+  //   .then((result) => {
+  //     res.send(result);
+  //   })
+  //   .catch((err) => {
+  //     res.send(err);
+  //   });
 });
 
 /**
