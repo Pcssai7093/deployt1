@@ -1,4 +1,4 @@
-const router=require("express").Router()
+const router = require("express").Router();
 const serviceConstructor = module.require("../Schemas/services");
 const userConstructor = module.require("../Schemas/users");
 
@@ -31,7 +31,7 @@ const userConstructor = module.require("../Schemas/users");
  *                    type: array
  *                about:
  *                    type: string
- * 
+ *
  */
 
 /**
@@ -47,7 +47,7 @@ const userConstructor = module.require("../Schemas/users");
  *                  schema:
  *                      type: object
  *                      properties:
- *                          sid: 
+ *                          sid:
  *                              type: string
  *                          uid:
  *                              type: string
@@ -69,7 +69,7 @@ const userConstructor = module.require("../Schemas/users");
  *                                  type: number
  *                              matchedCount:
  *                                  type: number
- *                          
+ *
  */
 
 router.post("/add", (req, res) => {
@@ -103,7 +103,7 @@ router.post("/add", (req, res) => {
  *                type: string
  *      responses:
  *          200:
- *              description: This api is used fetch all the services in the wishlist for a particular user 
+ *              description: This api is used fetch all the services in the wishlist for a particular user
  *              content:
  *                  application/json:
  *                      schema:
@@ -144,7 +144,7 @@ router.get("/:uid", (req, res) => {
  *                  schema:
  *                      type: object
  *                      properties:
- *                          sid: 
+ *                          sid:
  *                              type: string
  *                          uid:
  *                              type: string
@@ -166,7 +166,7 @@ router.get("/:uid", (req, res) => {
  *                                  type: number
  *                              matchedCount:
  *                                  type: number
- *                          
+ *
  */
 
 router.post("/delete", (req, res) => {
@@ -183,7 +183,6 @@ router.post("/delete", (req, res) => {
     });
 });
 
-
 // service id
 // user id
-module.exports=router;
+module.exports = router;

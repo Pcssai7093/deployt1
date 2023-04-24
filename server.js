@@ -20,7 +20,8 @@ const userRoutes = require("./Routes/user");
 const serviceRoutes = require("./Routes/service");
 const wishlistRoutes = require("./Routes/wishlist");
 const chatRoutes = require("./Routes/chat");
-
+const redisclient = require("./redis");
+const paymentController = require("./paymentController");
 app.use(cookieParser());
 app.use(cors({ origin: true }));
 
@@ -622,5 +623,237 @@ app.get("/test", async (req, res) => {
   let data = await serviceConstructor.find().populate("seller");
   res.send(data);
 });
+
+app.get("/admin/userss", async (req, res) => {
+  const cacheKey = "admin-privelige-users-all";
+  let clients = await redisClient.get(cacheKey);
+  if (!clients) {
+    userConstructor
+      .find()
+      .then((result) => {
+        const cacheKey = "admin-privelige-users-all";
+        redisClient.set(cacheKey, JSON.stringify(result));
+        res.send(result);
+      })
+      .catch((err) => {
+        res.send(err);
+      });
+  } else {
+    console.log(clients);
+    res.send(clients);
+  }
+});
+
+app.get("/admin/user/:uid", async (req, res) => {
+  const uid = req.params.uid;
+  const cacheKey = "admin-privelige-user-services";
+  let clients = await redisClient.get(cacheKey);
+  console.log("hello");
+  console.log(clients);
+  if (!clients) {
+    userConstructor
+      .findOne({ _id: uid })
+      .populate("services")
+      .then((result) => {
+        const cacheKey = "admin-privelige-user-services";
+        redisClient.set(cacheKey, JSON.stringify(result));
+        res.send(result);
+        console.log("hi");
+        console.log(result);
+      })
+      .catch((err) => {
+        res.send(err);
+      });
+  } else {
+    console.log(clients);
+    res.send(clients);
+  }
+});
+
+//---------------------------------------------//
+// steven's routes
+//route for getting number of users
+app.get("/numser", async (req, res) => {
+  try {
+    let number_of_documents = await serviceConstructor.find();
+    console.log(number_of_documents);
+    let objectsLen = 0;
+    for (let i = 0; i < number_of_documents.length; i++) {
+      // if entity is object, increase objectsLen by 1, which is the stores the total number of objects in array.
+      if (number_of_documents[i] instanceof Object) {
+        objectsLen++;
+      }
+    }
+    console.log(objectsLen);
+
+    res.send(objectsLen.toString());
+  } catch (error) {
+    console.log(error);
+  }
+});
+
+//route to get users for my admin page
+app.get("/getUsers", async (req, res) => {
+  await userConstructor
+    .find({}, { username: 1, email: 1, isBlock: 1 })
+
+    .then((result) => {
+      res.send(result);
+    })
+    .catch((err) => {
+      res.send(err);
+    });
+});
+
+//blocking and unblocking the user by id
+
+app.get("/BlockUsers/:uid", (req, res) => {
+  const id = req.params.uid;
+  userConstructor
+    .findByIdAndUpdate({ _id: id }, { isBlock: true })
+    .then((result) => {
+      res.send("data is blocked");
+    })
+    .catch((err) => {
+      res.send(err);
+    });
+});
+
+app.get("/UnBlockUsers/:uid", (req, res) => {
+  const id = req.params.uid;
+  userConstructor
+    .findByIdAndUpdate({ _id: id }, { isBlock: false })
+    .then((result) => {
+      res.send("data is Unblocked");
+    })
+    .catch((err) => {
+      res.send(err);
+    });
+});
+
+// route to get user's  details  based on the id
+
+app.get("/userDetails/:uid", (req, res) => {
+  const id = req.params.uid;
+  userConstructor
+    .findById(id, { fullname: 1, username: 1, email: 1, _id: 0 })
+    .then((result) => {
+      res.send(result);
+    })
+    .catch((err) => {
+      res.send(err);
+    });
+});
+
+//route to delete the user based on the id
+
+app.delete("/deleteUser/:uid", async (req, res) => {
+  try {
+    const id = req.params.uid;
+    const deletedElement = await userConstructor.findByIdAndDelete(id);
+    if (!deletedElement) {
+      return res.status(404).send("Element not found");
+    }
+    res.send(`Element with ID ${id} deleted successfully`);
+  } catch (error) {
+    console.error(error);
+    res.status(500).send("Server error");
+  }
+});
+
+// route to get the services based on the user id
+app.get("/userservices/:uid", (req, res) => {
+  const id = req.params.uid;
+  userConstructor
+    .findById(id, { services: 1, _id: 0 })
+    .populate("services")
+    .then((result) => {
+      res.send(result);
+    })
+    .catch((err) => {
+      res.send(err);
+    });
+});
+
+// route to block and unblock  the service based on id
+app.get("/Blockservice/:sid", (req, res) => {
+  const id = req.params.sid;
+  serviceConstructor
+    .findByIdAndUpdate(id, { isBlock: true })
+    .then((result) => {
+      res.send(result);
+    })
+    .catch((err) => {
+      res.send(err);
+    });
+});
+
+app.get("/UnBlockservice/:sid", (req, res) => {
+  const id = req.params.sid;
+  serviceConstructor
+    .findByIdAndUpdate(id, { isBlock: false })
+    .then((result) => {
+      res.send(result);
+    })
+    .catch((err) => {
+      res.send(err);
+    });
+});
+
+//route to get the services details
+app.get("/getServices", (req, res) => {
+  serviceConstructor
+    .find({}, { title: 1, price: 1, category: 1, isBlock: 1 })
+    .then((result) => {
+      res.send(result);
+    })
+    .catch((err) => {
+      res.send(err);
+    });
+});
+
+// route to delete the service based on the service id
+app.delete("/deleteService/:sid", async (req, res) => {
+  try {
+    const id = req.params.sid;
+    const deletedElement = await serviceConstructor.findByIdAndDelete(id);
+    if (!deletedElement) {
+      return res.status(404).send("Element not found");
+    }
+    res.send(`Element with ID ${id} deleted successfully`);
+  } catch (error) {
+    console.error(error);
+    res.status(500).send("Server error");
+  }
+});
+
+// route to get back the queries
+app.get("/userQueries", (req, res) => {
+  Contact.find({})
+    .then((result) => {
+      res.send(result);
+    })
+    .catch((err) => {
+      res.send(err);
+    });
+});
+
+// route to delete the query based on its id
+app.delete("/deleteQuery/:qid", async (req, res) => {
+  try {
+    const id = req.params.qid;
+    const deletedElement = await Contact.findByIdAndDelete(id);
+    if (!deletedElement) {
+      return res.status(404).send("Element not found");
+    }
+    res.send(`Element with ID ${id} deleted successfully`);
+  } catch (error) {
+    console.error(error);
+    res.status(500).send("Server error");
+  }
+});
+
+app.post("/orders", paymentController.orders);
+app.post("/verify", paymentController.verify);
 
 module.exports = app;
