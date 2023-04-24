@@ -16,8 +16,6 @@ const DatauriParser = require("datauri/parser");
 const swaggerUi = require("swagger-ui-express");
 const swaggerJSDoc = require("swagger-jsdoc");
 
-const redisclient = require("./redis");
-
 const userRoutes = require("./Routes/user");
 const serviceRoutes = require("./Routes/service");
 const wishlistRoutes = require("./Routes/wishlist");
@@ -240,36 +238,37 @@ app.post("/insert", async (req, res) => {
  */
 
 app.get("/admin/users", (req, res) => {
-  redisclient
-    .get("users")
-    .then((data) => {
-      // console.log(data);
-      if (data != null) {
-        console.log("cached");
-        res.send(data);
-      } else {
-        console.log("not cached");
-        userConstructor
-          .find()
-          .then((result) => {
-            redisclient.set("users", JSON.stringify(result)).then((r2) => {
-              redisclient.expire("users", 30).then((r3) => {
-                res.send(result);
-              });
-            });
-          })
-          .catch((err) => {
-            res.send(err);
-          });
-      }
+  userConstructor
+    .find()
+    .then((result) => {
+      res.send(result);
     })
     .catch((err) => {
       res.send(err);
     });
-  // userConstructor
-  //   .find()
-  //   .then((result) => {
-  //     res.send(result);
+
+  // redisclient
+  //   .get("users")
+  //   .then((data) => {
+  //     // console.log(data);
+  //     if (data != null) {
+  //       console.log("cached");
+  //       res.send(data);
+  //     } else {
+  //       console.log("not cached");
+  //       userConstructor
+  //         .find()
+  //         .then((result) => {
+  //           redisclient.set("users", JSON.stringify(result)).then((r2) => {
+  //             redisclient.expire("users", 30).then((r3) => {
+  //               res.send(result);
+  //             });
+  //           });
+  //         })
+  //         .catch((err) => {
+  //           res.send(err);
+  //         });
+  //     }
   //   })
   //   .catch((err) => {
   //     res.send(err);
@@ -623,6 +622,5 @@ app.get("/test", async (req, res) => {
   let data = await serviceConstructor.find().populate("seller");
   res.send(data);
 });
-
 
 module.exports = app;
