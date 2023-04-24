@@ -524,11 +524,11 @@ app.post("/admin/signin", (req, res) => {
       if (result[0].password === data.eml) {
         res.send(result[0]);
       } else {
-        res.send("hello");
+        res.send(false);
       }
     })
     .catch((err) => {
-      res.send("hell");
+      res.send(err);
     });
 });
 
