@@ -177,7 +177,7 @@ router.get("/count/:search/:sortCategory/:category/:price", (req, res) => {
 /**
  * @swagger
  * /service/blockHandle:
- *  post:
+ *  put:
  *      summary: To block/unblock a service
  *      description: To block/unblock a service
  *      requestBody:

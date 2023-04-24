@@ -37,7 +37,7 @@ const userConstructor = module.require("../Schemas/users");
 /**
  * @swagger
  * /wishlist/add:
- *  post:
+ *  put:
  *      summary: To add a service to the wishlist of a user
  *      description: To add a service to the wishlist of a user
  *      requestBody:
@@ -134,7 +134,7 @@ router.get("/:uid", (req, res) => {
 /**
  * @swagger
  * /wishlist/delete:
- *  post:
+ *  delete:
  *      summary: To delete a service to the wishlist of a user
  *      description: To delete a service to the wishlist of a user
  *      requestBody:

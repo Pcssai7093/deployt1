@@ -350,7 +350,7 @@ router.post("/chandra/signin", (req, res) => {
 /**
  * @swagger
  * /user/blockHandle:
- *  post:
+ *  put:
  *      summary: To block/unblock a user
  *      description: To block/unblock a user
  *      requestBody:
