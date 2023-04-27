@@ -127,7 +127,7 @@ app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerSpec));
  */
 
 app.get("/", (req, res) => {
-  res.send("db string is ", process.env.DockerDBID);
+  res.send(`db string is  ${process.env.DockerDBID}`);
 });
 
 app.post("/resetpassword/:id", (req, res) => {
