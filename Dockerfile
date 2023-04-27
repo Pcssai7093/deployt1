@@ -1,6 +1,10 @@
 FROM node:16-alpine
 
-ENV DockerDBID=2
+ARG DockerDBID=3
+
+ENV DockerDBID=$DockerDBID
+
+# ENV DockerDBID=2
 
 WORKDIR /app
 

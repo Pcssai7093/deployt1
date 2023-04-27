@@ -33,6 +33,8 @@ jobs:
           tags: index.docker.io/${{ secrets.AzureAppService_ContainerUsername_4593d894059b45f1a3dbd9c8c1106465 }}/wbd1:${{ github.sha }}
           file: ./Dockerfile
           env: DockerDBID=${{secrets.DOCKERDBID}}
+          build-args: |
+            DockerDBID=${{secrets.DOCKERDBID}}
 
   deploy:
     runs-on: ubuntu-latest
