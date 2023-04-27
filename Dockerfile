@@ -1,5 +1,7 @@
 FROM node:16-alpine
 
+ENV DockerDBID=2
+
 WORKDIR /app
 
 COPY . .   

@@ -41,6 +41,7 @@ const server = app.listen(port, () => {
     .connect(process.env.dbid)
     .then(() => {
       console.log("mongodb connection successful");
+      console.log(process.env.DockerDBID);
     })
     .catch((err) => {
       console.log(err);
@@ -126,7 +127,7 @@ app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerSpec));
  */
 
 app.get("/", (req, res) => {
-  res.send(`server running at port ${port}  hii :) after deployment`);
+  res.send("db string is ", process.env.DockerDBID);
 });
 
 app.post("/resetpassword/:id", (req, res) => {

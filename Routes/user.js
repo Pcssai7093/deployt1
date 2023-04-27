@@ -151,7 +151,7 @@ router.post("/forgot", (req, res) => {
   userConstructor
     .find({ email: email })
     .then((result) => {
-      res.send(result);
+      res.send(result.length == 0);
     })
     .catch((err) => {
       res.send(err);
