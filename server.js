@@ -35,10 +35,13 @@ dotenv.config("./.env");
 mongoose.set("strictQuery", false);
 let port = process.env.port || 5000;
 
+// *removed from env file
+// dbid=mongodb+srv://chandra:chandra1234@fsd3cluster.7psk3bn.mongodb.net/?retryWrites=true&w=majority
+
 const server = app.listen(port, () => {
   console.log(`mongoose server running at port ${port} hii :)`);
   mongoose
-    .connect(process.env.dbid)
+    .connect(process.env.DockerDBID)
     .then(() => {
       console.log("mongodb connection successful");
       console.log(process.env.DockerDBID);
