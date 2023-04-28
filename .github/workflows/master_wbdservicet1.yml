@@ -50,13 +50,13 @@ jobs:
       - name: Run tests
         env:
           port: 5000
-          secretKey: secret
-          DockerDBID: mongodb+srv://chandra:chandra1234@fsd3cluster.7psk3bn.mongodb.net/?retryWrites=true&w=majority
-          cloudinaryCloudName: dgeg6il49
-          cloudinaryApiKey: 812339449319741
-          cloudinaryApiSecret: NKMt8CdJWg05mcnUEOoF0e1TG74
+          DockerDBID: ${{secrets.DOCKERDBID}}
+          cloudinaryCloudName: ${{secrets.CLOUDINARYCLOUDNAME}}
+          cloudinaryApiKey: ${{secrets.CLOUDINARYAPIKEY}}
+          cloudinaryApiSecret: ${{secrets.CLOUDINARYAPISECRET}}
+          secretKey: ${{secrets.SECRETKEY}}
+          redisPassword: ${{secrets.REDISPASSWORD}}
           newKey: 12
-          redisPassword: hZlsDgapujBmfHGX7tAm7gTQrHaDqcOE
         run: npm test
 
   deploy:
