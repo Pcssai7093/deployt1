@@ -35,6 +35,9 @@ jobs:
           env: DockerDBID=${{secrets.DOCKERDBID}}
           build-args: |
             DockerDBID=${{secrets.DOCKERDBID}}
+            cloudinaryCloudName=${{secrets.CLOUDINARYCLOUDNAME}}
+            cloudinaryApiKey=${{secrets.CLOUDINARYAPIKEY}}
+            cloudinaryApiSecret=${{secrets.CLOUDINARYAPISECRET}}
 
   deploy:
     runs-on: ubuntu-latest

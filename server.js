@@ -22,6 +22,7 @@ const wishlistRoutes = require("./Routes/wishlist");
 const chatRoutes = require("./Routes/chat");
 const redisclient = require("./redis");
 const paymentController = require("./paymentController");
+const cloudinary = require("./cloudinary");
 app.use(cookieParser());
 app.use(cors({ origin: true }));
 
@@ -44,7 +45,14 @@ const server = app.listen(port, () => {
     .connect(process.env.DockerDBID)
     .then(() => {
       console.log("mongodb connection successful");
-      console.log(process.env.DockerDBID);
+      // console.log(cloudinary);
+      // cloudinary?.api?.ping((error, result) => {
+      //   if (error) {
+      //     console.error("cloudinary connection error");
+      //   } else {
+      //     console.log("cloudinary connection succussfull");
+      //   }
+      // });
     })
     .catch((err) => {
       console.log(err);
