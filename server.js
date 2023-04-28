@@ -45,6 +45,12 @@ const server = app.listen(port, () => {
     .connect(process.env.DockerDBID)
     .then(() => {
       console.log("mongodb connection successful");
+      console.log(process.env.port);
+      console.log(process.env.DockerDBID);
+      console.log(process.env.cloudinaryCloudName);
+      console.log(process.env.cloudinaryApiKey);
+      console.log(process.env.cloudinaryApiSecret);
+
       // console.log(cloudinary);
       // cloudinary?.api?.ping((error, result) => {
       //   if (error) {
