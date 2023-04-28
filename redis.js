@@ -12,7 +12,7 @@
 const redis = require("redis");
 
 const client = redis.createClient({
-  password: process.env.redisPassword,
+  password: "hZlsDgapujBmfHGX7tAm7gTQrHaDqcOE",
   socket: {
     host: "redis-17382.c281.us-east-1-2.ec2.cloud.redislabs.com",
     port: 17382,
@@ -22,7 +22,7 @@ const client = redis.createClient({
 client
   .connect()
   .then(() => {
-    console.log("Redis connected");
+    console.log("Redis connected1");
   })
   .catch((err) => {
     console.log(err.message);

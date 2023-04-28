@@ -20,7 +20,7 @@ const userRoutes = require("./Routes/user");
 const serviceRoutes = require("./Routes/service");
 const wishlistRoutes = require("./Routes/wishlist");
 const chatRoutes = require("./Routes/chat");
-const redisclient = require("./redis");
+const redisClient = require("./redis");
 const paymentController = require("./paymentController");
 const cloudinary = require("./cloudinary");
 app.use(cookieParser());
@@ -645,7 +645,7 @@ app.get("/admin/userss", async (req, res) => {
       .find()
       .then((result) => {
         const cacheKey = "admin-privelige-users-all";
-        redisClient.set(cacheKey, JSON.stringify(result));
+        redisClient.set(cacheKey, JSON.stringify(result), "EX", 30);
         res.send(result);
       })
       .catch((err) => {
