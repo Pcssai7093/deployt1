@@ -38,6 +38,8 @@ jobs:
             cloudinaryCloudName=${{secrets.CLOUDINARYCLOUDNAME}}
             cloudinaryApiKey=${{secrets.CLOUDINARYAPIKEY}}
             cloudinaryApiSecret=${{secrets.CLOUDINARYAPISECRET}}
+            secretKey=${{secrets.SECRETKEY}}
+            redisPassword=${{secrets.REDISPASSWORD}}
 
   deploy:
     runs-on: ubuntu-latest

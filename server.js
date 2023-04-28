@@ -45,11 +45,6 @@ const server = app.listen(port, () => {
     .connect(process.env.DockerDBID)
     .then(() => {
       console.log("mongodb connection successful");
-      console.log(process.env.port);
-      console.log(process.env.DockerDBID);
-      console.log(process.env.cloudinaryCloudName);
-      console.log(process.env.cloudinaryApiKey);
-      console.log(process.env.cloudinaryApiSecret);
 
       // console.log(cloudinary);
       // cloudinary?.api?.ping((error, result) => {
@@ -144,9 +139,7 @@ app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerSpec));
  */
 
 app.get("/", (req, res) => {
-  res.send(
-    `db string is  ${process.env.DockerDBID}  ${process.env.cloudinaryCloudName}  ${process.env.cloudinaryApiKey}   ${process.env.cloudinaryApiSecret}`
-  );
+  res.send(`added all env i think`);
 });
 
 app.post("/resetpassword/:id", (req, res) => {

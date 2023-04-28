@@ -16,6 +16,14 @@ ARG cloudinaryApiSecret
 
 ENV cloudinaryApiSecret=$cloudinaryApiSecret
 
+ARG secretKey
+
+ENV secretKey=$secretKey
+
+ARG redisPassword
+
+ENV redisPassword=$redisPassword
+
 # ENV DockerDBID=2
 
 WORKDIR /app
