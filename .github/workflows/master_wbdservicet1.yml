@@ -40,6 +40,15 @@ jobs:
             cloudinaryApiSecret=${{secrets.CLOUDINARYAPISECRET}}
             secretKey=${{secrets.SECRETKEY}}
             redisPassword=${{secrets.REDISPASSWORD}}
+  test:
+    runs-on: ubuntu-latest
+    needs: build
+    steps:
+      - uses: actions/checkout@v2
+      - name: Install dependencies
+        run: npm install
+      - name: Run tests
+        run: npm test
 
   deploy:
     runs-on: ubuntu-latest
