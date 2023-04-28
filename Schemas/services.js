@@ -7,6 +7,7 @@ const serviceSchema = new schema(
     title: {
       type: String,
       required: true,
+      index: true,
     },
     description: {
       type: String,
@@ -15,6 +16,7 @@ const serviceSchema = new schema(
     price: {
       type: Number,
       required: true,
+      index: true,
     },
     productImages: {
       type: [String],
@@ -27,6 +29,7 @@ const serviceSchema = new schema(
     category: {
       type: String,
       required: true,
+      index: true,
     },
     isBlock: {
       type: Boolean,

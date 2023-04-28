@@ -1,4 +1,3 @@
-
 const encryptPassword = module.require("./encrypt");
 const mongoose = require("mongoose");
 const schema = mongoose.Schema;
@@ -25,6 +24,7 @@ const userSchema = new schema(
       required: true,
       lowercase: true,
       unique: true,
+      index: true,
     },
     isSeller: {
       type: Boolean,
@@ -54,10 +54,10 @@ const userSchema = new schema(
       type: [schema.Types.ObjectId],
       ref: "services",
     },
-    conversations:{
-      type:[schema.Types.ObjectId],
-      ref:"conversations"
-    }
+    conversations: {
+      type: [schema.Types.ObjectId],
+      ref: "conversations",
+    },
   },
   { timestamps: true }
 );
