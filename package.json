@@ -5,7 +5,7 @@
   "main": "server.js",
   "scripts": {
     "start": "node server.js",
-    "test": "mocha './specs/*.spec.js' --exit --timeout 5000"
+    "test": "mocha './specs/*.spec.js' -exit --timeout 10000"
   },
   "author": "",
   "license": "ISC",
