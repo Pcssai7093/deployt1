@@ -32,7 +32,8 @@ jobs:
           push: true
           tags: index.docker.io/${{ secrets.AzureAppService_ContainerUsername_bd117c2abf9049809f7764c614b233d3 }}/gigwork_server:${{ github.sha }}
           file: ./Dockerfile
-          build-args: cloudinaryCloudName=${{secrets.CLOUDINARYCLOUDNAME}}
+          build-args: |
+            cloudinaryCloudName=${{secrets.CLOUDINARYCLOUDNAME}}
             cloudinaryApiKey=${{secrets.CLOUDINARYAPIKEY}}
             cloudinaryApiSecret=${{secrets.CLOUDINARYAPISECRET}}
             secretKey=${{secrets.SECRETKEY}}
