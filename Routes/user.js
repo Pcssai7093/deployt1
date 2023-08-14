@@ -116,9 +116,9 @@ router.post("/update", (req, res) => {
     });
 });
 
-router.get("/temp", auth, (req, res) => {
-  res.send(req);
-});
+// router.get("/temp", auth, (req, res) => {
+//   res.send(req);
+// });
 
 /**
  * @swagger
@@ -328,6 +328,12 @@ router.post("/chandra/signin", (req, res) => {
     .then((result) => {
       if (bcrypt.compareSync(data.userPassword, result[0].password)) {
         let jwtToken = createToken(result[0]._id);
+        res.cookie("jwt_token2", "hii", {
+          maxAge: 3600000,
+          domain: "localhost",
+          path: "/",
+          sameSite: "lax",  
+        });
 
         res.send({ errors: [], result, jwtToken });
         // * user need to set this jwttoken in a cookie in format

@@ -24,7 +24,13 @@ const redisClient = require("./redis");
 const paymentController = require("./paymentController");
 const cloudinary = require("./cloudinary");
 app.use(cookieParser());
-app.use(cors({ origin: true }));
+app.use(
+  cors({
+    origin: "http://localhost:3000",
+    methods: ["POST", "PUT", "GET", "OPTIONS", "HEAD"],
+    credentials: true,
+  })
+);
 
 app.use(express.json());
 app.use("/user", userRoutes);
@@ -70,6 +76,8 @@ let users = {};
 
 function addUser(socketId, userId) {
   users[userId] = socketId;
+  users[socketId] = userId;
+  console.log(users);
 }
 
 const io = socket(server, {
@@ -80,9 +88,10 @@ const io = socket(server, {
 });
 io.on("connection", (clientSocket) => {
   // io.to(clientSocket).emit("welcome","Server: :) hello u r connected");
-
+  console.log("connected", clientSocket.id);
   clientSocket.on("addUser", (userId) => {
     addUser(clientSocket.id, userId);
+    // clientSocket.emit("sendLiveUsers", users);
   });
 
   clientSocket.on("sendMessage", (fromUserId, toUserId, Message) => {
@@ -102,6 +111,25 @@ io.on("connection", (clientSocket) => {
         });
     }
   });
+
+  clientSocket.on("disconnect", () => {
+    console.log("disconnected", clientSocket.id);
+    userId = users[clientSocket.id];
+    delete users[userId];
+    delete users[clientSocket.id];
+    console.log(users);
+  });
+
+  clientSocket.on("forceDisconnect", function () {
+    clientSocket.disconnect();
+    userId = users[clientSocket.id];
+    delete users[userId];
+    delete users[clientSocket.id];
+    console.log(users);
+  });
+  setInterval(() => {
+    clientSocket.emit("sendLiveUsers", users);
+  }, 1000 * 3);
 });
 
 const options = {
@@ -142,6 +170,11 @@ app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 
 app.get("/", (req, res) => {
   res.send(`added all env i think`);
+});
+
+app.get("/tempjwt", (req, res) => {
+  res.cookie("jwt_token2", "hii", { maxAge: 3600000 });
+  res.send("cookie set");
 });
 
 app.post("/resetpassword/:id", (req, res) => {
