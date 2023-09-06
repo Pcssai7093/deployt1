@@ -26,13 +26,7 @@ const cloudinary = require("./cloudinary");
 app.use(cookieParser());
 app.use(
   cors({
-    origin: [
-      "http://localhost:3000",
-      "https://gigwork-client.azurewebsites.net/",
-      "https://gigwork-admin.azurewebsites.net/",
-    ],
-    methods: ["POST", "PUT", "GET", "OPTIONS", "HEAD"],
-    credentials: true,
+    origin: true,
   })
 );
 
