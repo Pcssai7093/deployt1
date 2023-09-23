@@ -58,5 +58,3 @@ The backend services of GigWork are hosted at: [Backend Deployment](https://gith
 *current repo is the backend server deployment
 
 ---
-
-Feel free to customize this README template with your project's specific details, logo, and deployment URLs. This will give users a clear understanding of your project's purpose, features, and your contributions to it.
