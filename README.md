@@ -4,7 +4,7 @@ Certainly! Here's a sample GitHub README file for your GigWork project:
 
 # GigWork
 
-![GigWork Logo](link_to_logo_image.png)
+![GigWork Logo](https://github.githubassets.com/images/modules/logos_page/GitHub-Mark.png)
 
 ## Table of Contents
 - [Description](#description)
@@ -51,11 +51,11 @@ My contributions to the project include:
 
 ### Client Side
 
-The client-side of GigWork is deployed and accessible at the following URL: [Client Side Deployment]([https://client-side-url.com](https://github.com/Pcssai7093/clientdeploy1))
+The client-side of GigWork is deployed and accessible at the following URL: [Client Side Deployment](https://github.com/Pcssai7093/clientdeploy1)
 
 ### Admin
 
-For administrative purposes, you can access the admin panel at: [Admin Panel Deployment]([https://admin-url.com](https://github.com/Pcssai7093/admindeploy1))
+For administrative purposes, you can access the admin panel at: [Admin Panel Deployment](https://github.com/Pcssai7093/admindeploy1)
 
 ### Backend
 The backend services of GigWork are hosted at: [Backend Deployment](https://github.com/Pcssai7093/deployt1)
