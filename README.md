@@ -1,6 +1,5 @@
 # GigWork
 
-![GigWork Logo](https://github.githubassets.com/images/modules/logos_page/GitHub-Mark.png)
 
 ## Table of Contents
 - [Description](#description)
