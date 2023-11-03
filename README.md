@@ -42,7 +42,7 @@ My contributions to the project include:
 
 - **Filter and Pagination Services:** Developed services for filtering and paginating freelancers and services.
 
-## Deployment
+## Github Repos
 
 ### Client Side
 
@@ -55,5 +55,8 @@ For administrative purposes, you can access the admin panel at: [Admin Panel Dep
 ### Backend
 The backend services of GigWork are hosted at: [Backend Deployment](https://github.com/Pcssai7093/deployt1)
 *current repo is the backend server deployment
+
+## Deployment links
+
 
 ---
