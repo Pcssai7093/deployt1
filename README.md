@@ -57,6 +57,12 @@ The backend services of GigWork are hosted at: [Backend Deployment](https://gith
 *current repo is the backend server deployment
 
 ## Deployment links
+### Client Side
+The client-side of GigWork is deployed and accessible at the following URL: [Client Side Deployment](https://gigwork-client.azurewebsites.net/)
+
+### Backend
+The backend services of GigWork are hosted at: [Backend Deployment](https://gigwork-server.azurewebsites.net/)
+
 
 
 ---
